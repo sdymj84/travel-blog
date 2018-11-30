@@ -38,8 +38,8 @@ const EnterButton = styled.button`
   }
 
   &:hover {
-    background-color: skyblue;
-    color: #000522;
+    background-color: #117E90;
+    border: 1px solid #117E90;
   }
 `
 
