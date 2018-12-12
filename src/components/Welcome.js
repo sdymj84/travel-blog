@@ -48,11 +48,12 @@ export const Welcome = () => {
     <div>
       <ContainerDiv className="uk-overflow-hidden">
         <MainImage src={'img/welcome.jpg'} alt="welcome image"
-          uk-scrollspy="cls: uk-animation-kenburns; repeat: true"></MainImage>
+          className="uk-animation-kenburns"></MainImage>
         <CenteredContentDiv>
           <div>WELCOME TO TRAVEL BLOG</div>
-          <EnterButton className="waves-effect uk-button uk-button-default 
-            uk-button-large uk-width-small">ENTER</EnterButton>
+          <EnterButton
+            className="waves-effect uk-button uk-button-default uk-button-large uk-width-small">
+            ENTER</EnterButton>
         </CenteredContentDiv>
       </ContainerDiv>
     </div>
