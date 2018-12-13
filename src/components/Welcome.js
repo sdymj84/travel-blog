@@ -1,17 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from "react-router-dom";
+import { Button } from "react-materialize";
+import "../index.scss"
 
 const ContainerDiv = styled.div`
   position: relative;
   text-align: center;
   color: white;
   font-weight: bold;
+  overflow: hidden;
 `
 
 const MainImage = styled.img`
   width: 100%;
   height: 100vh;
   object-fit: cover;
+
+  animation-name: scale-up;
+  animation-duration: 15s;
+
+  @keyframes scale-up {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
 `
 
 const CenteredContentDiv = styled.div`
@@ -31,14 +47,21 @@ const CenteredContentDiv = styled.div`
   }
 `
 
-const EnterButton = styled.button`
+const EnterButton = styled(Button)`
+  border: 1px solid white;
   border-radius: 4px;
+  height: 4em;
+  width: 10em;
+  font-size: 15px;
+  
+  
   && {
     color: white;
+    background-color: transparent;
   }
 
   &:hover {
-    background-color: #117E90;
+    background-color: $turq-color;
     border: 1px solid #117E90;
   }
 `
@@ -46,14 +69,13 @@ const EnterButton = styled.button`
 export const Welcome = () => {
   return (
     <div>
-      <ContainerDiv className="uk-overflow-hidden">
-        <MainImage src={'img/welcome.jpg'} alt="welcome image"
-          className="uk-animation-kenburns"></MainImage>
+      <ContainerDiv>
+        <MainImage src={'img/welcome.jpg'} alt="welcome image"></MainImage>
         <CenteredContentDiv>
           <div>WELCOME TO TRAVEL BLOG</div>
-          <EnterButton
-            className="waves-effect uk-button uk-button-default uk-button-large uk-width-small">
-            ENTER</EnterButton>
+          <Link to='/'>
+            <EnterButton waves="light">ENTER</EnterButton>
+          </Link>
         </CenteredContentDiv>
       </ContainerDiv>
     </div>

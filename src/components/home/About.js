@@ -11,7 +11,7 @@ export class Home extends Component {
     return (
       <HomeStyle>
         <Container>
-          <h1>Home</h1>
+          <h1>About</h1>
         </Container>
       </HomeStyle>
     )
