@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Container } from 'react-bootstrap'
 
-const HomeStyle = styled.div`
+const StyledHome = styled.div`
   margin-top: 3em;
 `
 
 export class Home extends Component {
   render() {
     return (
-      <HomeStyle>
+      <StyledHome>
         <Container>
           <h1>Home</h1>
         </Container>
-      </HomeStyle>
+      </StyledHome>
     )
   }
 }

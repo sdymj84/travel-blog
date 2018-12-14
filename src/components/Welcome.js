@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from "react-router-dom";
 import { Button } from "react-materialize";
-import "../index.scss"
 
 const ContainerDiv = styled.div`
   position: relative;
@@ -19,6 +18,7 @@ const MainImage = styled.img`
 
   animation-name: scale-up;
   animation-duration: 15s;
+  animation-fill-mode: forwards;
 
   @keyframes scale-up {
     0% {
@@ -53,15 +53,11 @@ const EnterButton = styled(Button)`
   height: 4em;
   width: 10em;
   font-size: 15px;
-  
-  
-  && {
-    color: white;
-    background-color: transparent;
-  }
+  color: white;
+  background-color: transparent;
 
-  &:hover {
-    background-color: $turq-color;
+  :hover {
+    background-color: #117E90;
     border: 1px solid #117E90;
   }
 `

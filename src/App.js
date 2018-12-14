@@ -8,8 +8,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Route path='/welcome' component={Welcome} />
-          <Route path='/' component={TravelBlog} />
+          <Switch>
+            <Route path='/welcome' component={Welcome} />
+            <Route path='/' component={TravelBlog} />
+          </Switch>
         </div>
       </BrowserRouter>
     );
