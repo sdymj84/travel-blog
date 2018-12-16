@@ -4,7 +4,7 @@ import { Container, Form, Col, Row } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
-const StyledHome = styled.div`
+const StyledContainer = styled.div`
   margin-top: 3em;
 
   h1 {
@@ -13,9 +13,6 @@ const StyledHome = styled.div`
 
   hr {
     margin: 2em;
-  }
-
-  div.ql-container {
   }
 `
 
@@ -40,7 +37,7 @@ export class CreatePost extends Component {
 
   render() {
     return (
-      <StyledHome>
+      <StyledContainer>
         <Container>
           <h1>Create new post</h1>
           <Form>
@@ -50,11 +47,14 @@ export class CreatePost extends Component {
               </Col>
             </Form.Group>
             <hr />
-            <ReactQuill theme='snow' modules={this.modules}
-              formats={this.formats}></ReactQuill>
+            <ReactQuill theme='snow'
+              modules={this.modules}
+              formats={this.formats}
+              placeholder='Write content..'>
+            </ReactQuill>
           </Form>
         </Container>
-      </StyledHome>
+      </StyledContainer>
     )
   }
 }
