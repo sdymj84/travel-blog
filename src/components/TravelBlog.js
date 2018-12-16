@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navbar from './layout/Navbar'
 import Home from './home/Home'
-import About from './home/About'
+import CreatePost from './post/CreatePost';
 
 export class TravelBlog extends Component {
   render() {
@@ -12,7 +12,7 @@ export class TravelBlog extends Component {
           <Navbar />
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/about' component={About} />
+            <Route path='/create' component={CreatePost} />
           </Switch>
         </div>
       </BrowserRouter>

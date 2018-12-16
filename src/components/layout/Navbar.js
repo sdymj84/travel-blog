@@ -25,7 +25,7 @@ const StyledNavbar = styled.div`
       right: 51%;
       bottom: 0;
       background: white;
-      height: 4px;
+      height: 3px;
       -webkit-transition-property: left, right;
       transition-property: left, right;
       -webkit-transition-duration: 0.1s;

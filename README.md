@@ -9,7 +9,6 @@
 ---
 
 ## App Details
-- Posts > Store in redux > Connect Firestore and store
 - 
 ---
 
