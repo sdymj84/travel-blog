@@ -16,8 +16,8 @@
 ### 1. Planning the app
 - Draw diagram of components and routes
 ### 2. Create components
-- Navbar > Home > Post Detail > Create Post
-- Sign In > Sign Up
+- Navbar > Sign In > Sign Up > Create Post
+- Home > Post Detail 
 ### 3. Adding Redux & Reducers & Actions
 - First, components get data from redux store using dummy data
 - Second, components post data to redux store using Actions / Action Creators
