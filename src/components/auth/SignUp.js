@@ -45,11 +45,6 @@ const SignUp = () => {
               <Form.Control type="password" placeholder="Password" />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} controlId="formHorizontalCheck">
-            <Col sm={{ span: 10, offset: 2 }}>
-              <Form.Check label="Remember me" />
-            </Col>
-          </Form.Group>
 
           <Form.Group as={Row}>
             <Col sm={{ span: 10, offset: 2 }}>
