@@ -80,7 +80,7 @@ const NavbarComp = () => {
   return (
     <StyledNavbar>
       <Navbar variant='dark' expand="md">
-        <Link exact to='/'>
+        <Link to='/'>
           <Navbar.Brand as='span'>TravelBlog</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

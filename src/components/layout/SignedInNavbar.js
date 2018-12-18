@@ -5,7 +5,7 @@ import { Nav } from 'react-bootstrap'
 const SignedInNavbar = () => {
   return (
     <Nav>
-      <NavLink exact to='/'>
+      <NavLink to='/'>
         <Nav.Link as='span'>Posts</Nav.Link>
       </NavLink>
       <NavLink to='/create'>
