@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Container, Image, CardColumns, Card } from 'react-bootstrap'
+import { Container, Image, Card, Row, Col } from 'react-bootstrap'
 
 const StyledContainer = styled.div`
   .container {
@@ -11,20 +11,10 @@ const StyledContainer = styled.div`
     background-color: #F5F5F5;
   }
 
-  .card-columns {
-    display: inline-block;
+  .card {
+    margin-bottom: 2em;
   }
 
-  @media (min-width: 576px) {
-    .card-columns {
-      column-count: 2;
-    }
-  }
-  @media (min-width: 768px) {
-    .card-columns {
-      column-count: 3;
-    }
-  }
 `
 
 const StyledWorldMap = styled(Image)`
@@ -44,40 +34,45 @@ export class Home extends Component {
           <StyledWorldMap src="img/worldmap.jpg" fluid />
         </div>
         <Container>
-          <CardColumns>
+          <Row>
 
-            <Card>
-              <Card.Img variant="top" src="img/south-korea.jpg" />
-              <Card.Body>
-                <Card.Title>South Korea</Card.Title>
-                <Card.Text>
-                  My Home
+            <Col sm={6} lg={4}>
+              <Card>
+                <Card.Img variant="top" src="img/south-korea.jpg" />
+                <Card.Body>
+                  <Card.Title>South Korea</Card.Title>
+                  <Card.Text>
+                    My Home
                 </Card.Text>
-              </Card.Body>
-            </Card>
+                </Card.Body>
+              </Card>
+            </Col>
 
-            <Card>
-              <Card.Img variant="top" src="img/australia.jpg" />
-              <Card.Body>
-                <Card.Title>Australia</Card.Title>
-                <Card.Text>
-                  Been there for 1y 6m
+            <Col sm={6} lg={4}>
+              <Card>
+                <Card.Img variant="top" src="img/australia.jpg" />
+                <Card.Body>
+                  <Card.Title>Australia</Card.Title>
+                  <Card.Text>
+                    Been there for 1y 6m
                 </Card.Text>
-              </Card.Body>
-            </Card>
+                </Card.Body>
+              </Card>
+            </Col>
 
-            <Card>
-              <Card.Img variant="top" src="img/usa.jpg" />
-              <Card.Body>
-                <Card.Title>United States</Card.Title>
-                <Card.Text>
-                  My second home
+            <Col sm={6} lg={4}>
+              <Card>
+                <Card.Img variant="top" src="img/usa.jpg" />
+                <Card.Body>
+                  <Card.Title>United States</Card.Title>
+                  <Card.Text>
+                    My second home
                 </Card.Text>
-              </Card.Body>
-            </Card>
+                </Card.Body>
+              </Card>
+            </Col>
 
-
-          </CardColumns>
+          </Row>
         </Container>
       </StyledContainer>
     )
