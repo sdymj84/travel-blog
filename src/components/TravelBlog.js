@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navbar from './layout/Navbar'
+import Footer from './layout/Footer'
 import Home from './home/Home'
 import CreatePost from './post/CreatePost';
 import SignIn from './auth/SignIn';
@@ -18,6 +19,7 @@ export class TravelBlog extends Component {
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
           </Switch>
+          <Footer />
         </div>
       </BrowserRouter>
     )
