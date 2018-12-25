@@ -4,6 +4,8 @@ import Navbar from './layout/Navbar'
 import Footer from './layout/Footer'
 import Home from './home/Home'
 import CreatePost from './post/CreatePost';
+import PostList from './post/PostList'
+import PostDetail from './post/PostDetail'
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 
@@ -15,6 +17,8 @@ export class TravelBlog extends Component {
           <Navbar />
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/post/:country' component={PostList} />
+            <Route exact path='/post/:country/:post_id' component={PostDetail} />
             <Route path='/create' component={CreatePost} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />

@@ -1,30 +1,17 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
-import { Container, Image, Card, Row, Col } from 'react-bootstrap'
+import { Container, Card, Row, Col } from 'react-bootstrap'
 
 const StyledContainer = styled.div`
   .container {
     margin-top: 3em;
   }
 
-  .jumbo {
-    background-color: #F5F5F5;
-  }
-
   .card {
     margin-bottom: 2em;
   }
-  
-`
 
-const StyledWorldMap = styled(Image)`
-  @media (min-width: 1200px) {
-    width: 1200px;
-    display: block;
-    margin: 0 auto;
-  }
-  
 `
 
 const StyledLink = styled(Link)`
@@ -49,24 +36,38 @@ const StyledLink = styled(Link)`
 
 `
 
+
 export class Home extends Component {
   render() {
     return (
       <StyledContainer>
-        <div className='jumbo'>
-          <StyledWorldMap src="img/worldmap.jpg" fluid />
-        </div>
         <Container>
           <Row>
 
+
             <Col sm={6} lg={4}>
-              <StyledLink to="/post/south-korea">
+              <StyledLink to='/post/south-korea/1'>
                 <Card>
-                  <Card.Img variant="top" src="img/south-korea.jpg" />
+                  <Card.Img variant="top" src="https://place-hold.it/350x200" />
                   <Card.Body>
-                    <Card.Title>South Korea</Card.Title>
+                    <Card.Title>Seoul 3 days trip</Card.Title>
                     <Card.Text>
-                      My Home
+                      Eat Eat and Eat!!!
+                </Card.Text>
+                  </Card.Body>
+                </Card>
+              </StyledLink>
+            </Col>
+
+
+            <Col sm={6} lg={4}>
+              <StyledLink to='/post/south-korea/2'>
+                <Card>
+                  <Card.Img variant="top" src="https://place-hold.it/350x200" />
+                  <Card.Body>
+                    <Card.Title>Korean Palace tour</Card.Title>
+                    <Card.Text>
+                      Experience Chosun era
                 </Card.Text>
                   </Card.Body>
                 </Card>
@@ -74,27 +75,13 @@ export class Home extends Component {
             </Col>
 
             <Col sm={6} lg={4}>
-              <StyledLink to="post/autralia">
+              <StyledLink to='/post/south-korea/3'>
                 <Card>
-                  <Card.Img variant="top" src="img/australia.jpg" />
+                  <Card.Img variant="top" src="https://place-hold.it/350x200" />
                   <Card.Body>
-                    <Card.Title>Australia</Card.Title>
+                    <Card.Title>Jeju Island 2 days trip</Card.Title>
                     <Card.Text>
-                      Been there for 1y 6m
-                </Card.Text>
-                  </Card.Body>
-                </Card>
-              </StyledLink>
-            </Col>
-
-            <Col sm={6} lg={4}>
-              <StyledLink to="/post/usa">
-                <Card>
-                  <Card.Img variant="top" src="img/usa.jpg" />
-                  <Card.Body>
-                    <Card.Title>United States</Card.Title>
-                    <Card.Text>
-                      My second home
+                      Beautiful and peaceful island
                 </Card.Text>
                   </Card.Body>
                 </Card>

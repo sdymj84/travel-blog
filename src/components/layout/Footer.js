@@ -8,6 +8,7 @@ const StyledFooter = styled.div`
   /* * {
     outline: 1px solid red;
   } */
+  
   footer {
     margin-top: 5em;
     padding: 2em 2em 1em 2em;
@@ -20,7 +21,7 @@ const StyledFooter = styled.div`
 const FooterComp = () => {
   return (
     <StyledFooter>
-      <footer className="footer">
+      <footer className="">
         <Container>
           <p>All information on this website is exclusively based on my own experiences and research. Prices, opening hours, etc. are updated regularly but might have changed and have to be checked before use.</p>
           <p>Cookie and privacy policy / terms and conditions</p>
