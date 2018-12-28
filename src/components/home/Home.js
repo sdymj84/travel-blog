@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import { Container, Image, Card, Row, Col } from 'react-bootstrap'
+import SvgComponent from './SvgComponent'
 
 const StyledContainer = styled.div`
   .container {
@@ -15,14 +16,92 @@ const StyledContainer = styled.div`
   .card {
     margin-bottom: 2em;
   }
-  
+
 `
 
-const StyledWorldMap = styled(Image)`
+const StyledWorldMap = styled(SvgComponent)`
   @media (min-width: 1200px) {
     width: 1200px;
     display: block;
     margin: 0 auto;
+  }
+
+  #africa g {
+    fill: #53676c;
+    transition: fill 0.4s ease;
+    -webkit-transition: fill 0.4s ease;
+    fill-opacity: 0.8;
+    transition: fill-opacity 0.4s ease;
+    -webkit-transition: fill-opacity 0.4s ease;
+  }
+  #africa g:hover {
+    fill: #394d51;
+    fill-opacity: 1;
+  }
+
+  #asia g {
+    fill: #FE9856;
+    transition: fill 0.4s ease;
+    -webkit-transition: fill 0.4s ease;
+    fill-opacity: 0.8;
+    transition: fill-opacity 0.4s ease;
+    -webkit-transition: fill-opacity 0.4s ease;
+  }
+  #asia g:hover {
+    fill: #e06a21;
+    fill-opacity: 1;
+  }
+
+  #oceania g {
+    fill: #00aad4;
+    transition: fill 0.4s ease;
+    -webkit-transition: fill 0.4s ease;
+    fill-opacity: 0.8;
+    transition: fill-opacity 0.4s ease;
+    -webkit-transition: fill-opacity 0.4s ease;
+  }
+  #oceania g:hover {
+    fill: #027791;
+    fill-opacity: 1;
+  }
+
+  #south-america g {
+    fill: #00A910;
+    transition: fill 0.4s ease;
+    -webkit-transition: fill 0.4s ease;
+    fill-opacity: 0.8;
+    transition: fill-opacity 0.4s ease;
+    -webkit-transition: fill-opacity 0.4s ease;
+  }
+  #south-america g:hover {
+    fill: #01720a;
+    fill-opacity: 1;
+  }
+
+  #europe g {
+    fill: #c83771;
+    transition: fill 0.4s ease;
+    -webkit-transition: fill 0.4s ease;
+    fill-opacity: 0.8;
+    transition: fill-opacity 0.4s ease;
+    -webkit-transition: fill-opacity 0.4s ease;
+  }
+  #europe g:hover {
+    fill: #871f46;
+    fill-opacity: 1;
+  }
+
+  #north-america g {
+    fill: #FECB17;
+    transition: fill 0.4s ease;
+    -webkit-transition: fill 0.4s ease;
+    fill-opacity: 0.8;
+    transition: fill-opacity 0.4s ease;
+    -webkit-transition: fill-opacity 0.4s ease;
+  }
+  #north-america g:hover {
+    fill: #d1a002;
+    fill-opacity: 1;
   }
   
 `
@@ -54,7 +133,8 @@ export class Home extends Component {
     return (
       <StyledContainer>
         <div className='jumbo'>
-          <StyledWorldMap src="img/worldmap.jpg" fluid />
+          {/* <StyledWorldMap src="img/worldmap.jpg" useMap="#image-map" fluid /> */}
+          <StyledWorldMap />
         </div>
         <Container>
           <Row>
@@ -103,7 +183,7 @@ export class Home extends Component {
 
           </Row>
         </Container>
-      </StyledContainer>
+      </StyledContainer >
     )
   }
 }
