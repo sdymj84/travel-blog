@@ -32,6 +32,7 @@ const getColor = (props) => {
 };
 
 const StyledDropzone = styled.div`
+  display: table;
   width: 100%;
   height: 100px;
   border-width: 2px;
@@ -39,6 +40,12 @@ const StyledDropzone = styled.div`
   border-color: ${props => getColor(props)};
   border-style: ${props => props.isDragReject || props.isDragActive ? 'solid' : 'dashed'};
   background-color: ${props => props.isDragReject || props.isDragActive ? '#eee' : ''};
+  text-align: center;
+
+  span {
+    display: table-cell;
+    vertical-align: middle;
+  }
 `
 
 export class CreatePost extends Component {
@@ -90,7 +97,8 @@ export class CreatePost extends Component {
                         isDragReject={isDragReject}
                         {...getRootProps()}
                       >
-                        {isDragAccept ? 'Drop' : 'Drag'} files here...
+                        <span><img src="/open-iconic/svg/action-redo.svg" />
+                        {isDragAccept ? 'Drop' : 'Drag'} Main Image file here...</span>
                   </StyledDropzone>
                     )
                   }}
