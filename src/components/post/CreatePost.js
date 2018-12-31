@@ -4,6 +4,7 @@ import { Container, Form, Col, Row, Dropdown, DropdownButton } from 'react-boots
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import Dropzone from 'react-dropzone'
+import CountryDropdown from './CountryDropdown'
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -46,6 +47,12 @@ const StyledDropzone = styled.div`
     display: table-cell;
     vertical-align: middle;
   }
+
+  .oi-plus {
+    width: 1em;
+    height: 1em;
+    margin-right: 5px;
+  }
 `
 
 export class CreatePost extends Component {
@@ -74,11 +81,7 @@ export class CreatePost extends Component {
           <h1>Create new post</h1>
           <Form>
 
-            <DropdownButton title="Select Country">
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </DropdownButton>
+            <CountryDropdown />
 
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>
@@ -97,9 +100,9 @@ export class CreatePost extends Component {
                         isDragReject={isDragReject}
                         {...getRootProps()}
                       >
-                        <span><img src="/open-iconic/svg/action-redo.svg" />
-                        {isDragAccept ? 'Drop' : 'Drag'} Main Image file here...</span>
-                  </StyledDropzone>
+                        <span><img src="/open-iconic/svg/plus.svg" alt="plus" className="oi-plus" />
+                          {isDragAccept ? 'Drop' : 'Drag'} Main Image file here...</span>
+                      </StyledDropzone>
                     )
                   }}
                 </Dropzone>
