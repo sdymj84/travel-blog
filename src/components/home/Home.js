@@ -112,7 +112,7 @@ export class Home extends Component {
 
   scrollToRef = () => {
     window.scrollTo({
-      top: this.ref.current.offsetTop,
+      top: this.ref.current.offsetTop - 30,
       behavior: "smooth"
     })
   }
