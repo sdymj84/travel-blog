@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Container, Jumbotron, Image } from 'react-bootstrap'
+import { Container, Image, Card, Row, Col } from 'react-bootstrap'
+import { connect } from "react-redux";
 
 const StyledContainer = styled.div`
   .container {
@@ -13,21 +14,45 @@ const StyledContainer = styled.div`
 
 `
 
-export class Home extends Component {
+export class PostDetail extends Component {
+  id = this.props.id
+
+  // TODO: fix this
+  posts = this.props.posts.filter(post => post.id === '100')
+
   render() {
+    console.log(this.posts)
     return (
       <StyledContainer>
         <Container fluid>
-          <Image src="https://place-hold.it/1900x500" fluid></Image>
+          <Image src={this.posts.mainImage} fluid></Image>
         </Container>
         <Container>
-          <h1>Seoul 3 days trip</h1>
+          <h1>{this.posts.title}</h1>
           <hr />
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat et consequuntur repellat molestiae vitae quibusdam eum sapiente dolore at impedit, asperiores sunt repellendus a, voluptates porro quidem, suscipit quia. Dolore.</p>
+          {this.posts.content && this.posts.content.map(content => {
+            return (
+              <Card>
+                <Card.Img variant="top" src={content.image} />
+                <Card.Body>
+                  <Card.Text>
+                    {content.body}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            )
+          })}
         </Container>
       </StyledContainer>
     )
   }
 }
 
-export default Home
+const mapStateToProps = (state, ownProps) => {
+  return {
+    posts: state.post.posts,
+    id: ownProps.match.params.post_id
+  }
+}
+
+export default connect(mapStateToProps)(PostDetail)

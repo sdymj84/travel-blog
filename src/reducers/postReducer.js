@@ -1,28 +1,54 @@
 const initialState = {
+  test: {
+    country: "Minjun's world"
+  },
+
   countries: [
     {
       id: 1,
-      country: "South Korea",
+      photoUrl: "/img/south-korea.jpg",
+      countryName: "South Korea",
       summary: "My Home",
       continent: "asia",
-    }
+    },
+    {
+      id: 2,
+      photoUrl: "/img/australia.jpg",
+      countryName: "Autralia",
+      summary: "Been there for 1y 6m",
+      continent: "oceania",
+    },
+    {
+      id: 3,
+      photoUrl: "/img/usa.jpg",
+      countryName: "United States",
+      summary: "My second home",
+      continent: "north-america",
+    },
   ],
 
   posts: [
     {
       id: 100,
       title: "Seoul 3 days trip",
-      summary: "Eat Eat and Eat!!!",
+      summary: "Eat Eat and Eat!",
+      mainImage: "/img/south-korea.jpg",
       content: [
         {
-          image: "",
-          body: "1",
+          image: "/img/australia.jpg",
+          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, quo? Consequatur laboriosam, quam fuga consectetur, incidunt dolores fugiat, non labore obcaecati temporibus optio accusantium neque facere tempora maiores commodi alias.",
         },
         {
-          image: "",
-          body: "2",
+          image: "/img/usa.jpg",
+          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, perferendis porro soluta reprehenderit doloremque est nesciunt a rerum excepturi in magni sit deleniti alias nulla iusto vel maiores? Voluptatem, repellendus.",
         }
       ]
     }
   ]
 }
+
+const postReducer = (state = initialState, action) => {
+  return state
+}
+
+export default postReducer

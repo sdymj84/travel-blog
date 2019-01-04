@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Container, Form, Col, Row, Dropdown, DropdownButton } from 'react-bootstrap'
+import { Container, Form, Col, Row } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import Dropzone from 'react-dropzone'

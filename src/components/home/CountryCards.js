@@ -29,49 +29,26 @@ const StyledLink = styled(Link)`
 
 
 const CountryCards = (props) => {
+  const countries = props.countries
   return (
     <Row>
-      <Col sm={6} lg={4}>
-        <StyledLink to="/post/south-korea">
-          <Card className="asia">
-            <Card.Img variant="top" src="img/south-korea.jpg" />
-            <Card.Body>
-              <Card.Title>South Korea</Card.Title>
-              <Card.Text>
-                My Home
-                </Card.Text>
-            </Card.Body>
-          </Card>
-        </StyledLink>
-      </Col>
-
-      <Col sm={6} lg={4}>
-        <StyledLink to="post/autralia">
-          <Card>
-            <Card.Img variant="top" src="img/australia.jpg" />
-            <Card.Body>
-              <Card.Title>Australia</Card.Title>
-              <Card.Text>
-                Been there for 1y 6m
-                </Card.Text>
-            </Card.Body>
-          </Card>
-        </StyledLink>
-      </Col>
-
-      <Col sm={6} lg={4}>
-        <StyledLink to="/post/usa">
-          <Card>
-            <Card.Img variant="top" src="img/usa.jpg" />
-            <Card.Body>
-              <Card.Title>United States</Card.Title>
-              <Card.Text>
-                My second home
-                </Card.Text>
-            </Card.Body>
-          </Card>
-        </StyledLink>
-      </Col>
+      {countries && countries.map(country => {
+        return (
+          <Col sm={6} lg={4} key={country.id}>
+            <StyledLink to="/post/south-korea">
+              <Card className={country.continent}>
+                <Card.Img variant="top" src={country.photoUrl} />
+                <Card.Body>
+                  <Card.Title>{country.countryName}</Card.Title>
+                  <Card.Text>
+                    {country.summary}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </StyledLink>
+          </Col>
+        )
+      })}
     </Row>
   )
 }
