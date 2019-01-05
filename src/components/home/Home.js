@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Container, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import SvgComponent from './SvgComponent'
 import CountryCards from './CountryCards'
+import { connect } from "react-redux";
 
 const StyledContainer = styled.div`
   .container {
@@ -108,6 +109,7 @@ const StyledWorldMap = styled(SvgComponent)`
 
 export class Home extends Component {
 
+  countries = this.props.countries
   ref = React.createRef();
 
   scrollToRef = () => {
@@ -129,11 +131,17 @@ export class Home extends Component {
         </div>
         <Container>
           <div ref={this.ref}></div>
-          <CountryCards />
+          <CountryCards countries={this.countries} />
         </Container>
       </StyledContainer >
     )
   }
 }
 
-export default Home
+const mapStateToProps = (state) => {
+  return {
+    countries: state.post.countries
+  }
+}
+
+export default connect(mapStateToProps)(Home)

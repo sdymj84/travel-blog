@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import { Container, Card, Row, Col } from 'react-bootstrap'
+import { connect } from "react-redux";
 
 const StyledContainer = styled.div`
   .container {
@@ -37,56 +38,32 @@ const StyledLink = styled(Link)`
 `
 
 
-export class Home extends Component {
+export class PostList extends Component {
+  posts = this.props.posts
+
   render() {
     return (
       <StyledContainer>
         <Container>
           <Row>
 
-
-            <Col sm={6} lg={4}>
-              <StyledLink to='/post/south-korea/1'>
-                <Card>
-                  <Card.Img variant="top" src="https://place-hold.it/350x200" />
-                  <Card.Body>
-                    <Card.Title>Seoul 3 days trip</Card.Title>
-                    <Card.Text>
-                      Eat Eat and Eat!!!
-                </Card.Text>
-                  </Card.Body>
-                </Card>
-              </StyledLink>
-            </Col>
-
-
-            <Col sm={6} lg={4}>
-              <StyledLink to='/post/south-korea/2'>
-                <Card>
-                  <Card.Img variant="top" src="https://place-hold.it/350x200" />
-                  <Card.Body>
-                    <Card.Title>Korean Palace tour</Card.Title>
-                    <Card.Text>
-                      Experience Chosun era
-                </Card.Text>
-                  </Card.Body>
-                </Card>
-              </StyledLink>
-            </Col>
-
-            <Col sm={6} lg={4}>
-              <StyledLink to='/post/south-korea/3'>
-                <Card>
-                  <Card.Img variant="top" src="https://place-hold.it/350x200" />
-                  <Card.Body>
-                    <Card.Title>Jeju Island 2 days trip</Card.Title>
-                    <Card.Text>
-                      Beautiful and peaceful island
-                </Card.Text>
-                  </Card.Body>
-                </Card>
-              </StyledLink>
-            </Col>
+            {this.posts && this.posts.map(post => {
+              return (
+                <Col sm={6} lg={4} key={post.id}>
+                  <StyledLink to={`/post/south-korea/${post.id}`}>
+                    <Card>
+                      <Card.Img variant="top" src={post.mainImage} />
+                      <Card.Body>
+                        <Card.Title>{post.title}</Card.Title>
+                        <Card.Text>
+                          {post.summary}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </StyledLink>
+                </Col>
+              )
+            })}
 
           </Row>
         </Container>
@@ -95,4 +72,10 @@ export class Home extends Component {
   }
 }
 
-export default Home
+const mapStateToProps = (state) => {
+  return {
+    posts: state.post.posts
+  }
+}
+
+export default connect(mapStateToProps)(PostList)
