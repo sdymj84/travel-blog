@@ -12,25 +12,30 @@ const StyledContainer = styled.div`
     padding: 0;
   }
 
+  .card {
+    margin-bottom: 1em;
+    font-size: 1.2em;
+  }
+
 `
+
 
 export class PostDetail extends Component {
   id = this.props.id
 
-  // TODO: fix this
-  posts = this.props.posts.filter(post => post.id === '100')
+  post = this.props.posts.filter(post => post.id === 100)[0]
 
   render() {
-    console.log(this.posts)
+    console.log("current post : ", this.post)
     return (
       <StyledContainer>
         <Container fluid>
-          <Image src={this.posts.mainImage} fluid></Image>
+          <Image src={this.post.mainImage} fluid></Image>
         </Container>
         <Container>
-          <h1>{this.posts.title}</h1>
+          <h1>{this.post.title}</h1>
           <hr />
-          {this.posts.content && this.posts.content.map(content => {
+          {this.post.content && this.post.content.map(content => {
             return (
               <Card>
                 <Card.Img variant="top" src={content.image} />
