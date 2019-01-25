@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Container, Form, Col, Row } from 'react-bootstrap'
+import { Container, Form, Col, Row, Button } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import Dropzone from 'react-dropzone'
 import CountryDropdown from './CountryDropdown'
+import { connect } from "react-redux";
+import { createPost } from '../../actions/postActions'
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -57,6 +59,12 @@ const StyledDropzone = styled.div`
 
 export class CreatePost extends Component {
 
+  state = {
+    country: "",
+    title: "",
+    content: "",
+  }
+
   modules = {
     toolbar: [
       [{ 'header': [1, 2, false] }],
@@ -74,6 +82,10 @@ export class CreatePost extends Component {
     'link', 'image'
   ]
 
+  handleChange = () => {
+    console.log('changed')
+  }
+
   render() {
     return (
       <StyledContainer>
@@ -85,7 +97,7 @@ export class CreatePost extends Component {
 
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>
-                <Form.Control type="text" placeholder="Title" />
+                <Form.Control type="text" placeholder="Title" onChange={this.handleChange} />
               </Col>
             </Form.Group>
             <hr />
@@ -113,6 +125,13 @@ export class CreatePost extends Component {
               formats={this.formats}
               placeholder='Write content..'>
             </ReactQuill>
+            <hr />
+            <Form.Group as={Row} controlId="title">
+              <Col sm={{ span: 2 }}>
+                <Button as="input" type="submit" value="Submit" block />
+              </Col>
+            </Form.Group>
+
           </Form>
         </Container>
       </StyledContainer >
@@ -120,4 +139,9 @@ export class CreatePost extends Component {
   }
 }
 
-export default CreatePost
+const mapDispatchToProps = (dispatch) => {
+
+}
+
+export default connect(null, mapDispatchToProps)(CreatePost)
+
