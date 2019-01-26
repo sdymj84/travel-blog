@@ -20,8 +20,9 @@ export class CountryDropdown extends Component {
     return (
       <StyledSelect className="btn btn-info"
         value={this.state.selectedCountry}
-        onChange={this.handleChange}>
-        <option>Select Country</option>
+        onChange={this.handleChange}
+        required>
+        <option value="">Select Country</option>
         <option value="South Korea">South Korea</option>
         <option value="Autralia">Autralia</option>
         <option value="United States">United States</option>

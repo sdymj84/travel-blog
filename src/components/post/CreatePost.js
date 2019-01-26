@@ -100,7 +100,7 @@ export class CreatePost extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log('submitted')
+    this.props.createPost(this.state)
   }
 
   render() {
@@ -114,7 +114,7 @@ export class CreatePost extends Component {
 
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>
-                <Form.Control type="text" placeholder="Title" onChange={this.handleChange} />
+                <Form.Control type="text" placeholder="Title" onChange={this.handleChange} required />
               </Col>
             </Form.Group>
             <hr />
@@ -142,7 +142,8 @@ export class CreatePost extends Component {
               formats={this.formats}
               placeholder='Write content..'
               value={this.state.content}
-              onChange={this.handleQuillChange} >
+              onChange={this.handleQuillChange}
+              required >
             </ReactQuill>
             <hr />
             <Form.Group as={Row} controlId="title">
