@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const StyledSelect = styled.select`
@@ -6,15 +6,28 @@ const StyledSelect = styled.select`
   margin-bottom: 1em;
 `
 
-const CountryDropdown = () => {
-  return (
-    <StyledSelect className="btn btn-info">
-      <option>Select Country</option>
-      <option>South Korea</option>
-      <option>Autralia</option>
-      <option>United States</option>
-    </StyledSelect>
-  )
+export class CountryDropdown extends Component {
+  state = {
+    selectedCountry: ""
+  }
+
+  handleChange = (e) => {
+    this.setState({ selectedCountry: e.target.value })
+    this.props.onChange(e.target.value)
+  }
+
+  render() {
+    return (
+      <StyledSelect className="btn btn-info"
+        value={this.state.selectedCountry}
+        onChange={this.handleChange}>
+        <option>Select Country</option>
+        <option value="South Korea">South Korea</option>
+        <option value="Autralia">Autralia</option>
+        <option value="United States">United States</option>
+      </StyledSelect>
+    )
+  }
 }
 
 export default CountryDropdown

@@ -82,8 +82,25 @@ export class CreatePost extends Component {
     'link', 'image'
   ]
 
-  handleChange = () => {
-    console.log('changed')
+  handleCountryChange = (country) => {
+    this.setState({ country })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  handleQuillChange = (value) => {
+    this.setState({
+      content: value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    console.log('submitted')
   }
 
   render() {
@@ -91,9 +108,9 @@ export class CreatePost extends Component {
       <StyledContainer>
         <Container>
           <h1>Create new post</h1>
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
 
-            <CountryDropdown />
+            <CountryDropdown onChange={this.handleCountryChange} />
 
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>
@@ -123,7 +140,9 @@ export class CreatePost extends Component {
             <ReactQuill theme='snow'
               modules={this.modules}
               formats={this.formats}
-              placeholder='Write content..'>
+              placeholder='Write content..'
+              value={this.state.content}
+              onChange={this.handleQuillChange} >
             </ReactQuill>
             <hr />
             <Form.Group as={Row} controlId="title">
@@ -140,7 +159,9 @@ export class CreatePost extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-
+  return {
+    createPost: (post) => dispatch(createPost(post))
+  }
 }
 
 export default connect(null, mapDispatchToProps)(CreatePost)
