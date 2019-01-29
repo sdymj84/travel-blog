@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Navbar, Nav } from 'react-bootstrap'
 import SignedInNavbar from './SignedInNavbar';
 import SignedOutNavbar from './SignedOutNavbar';
+import { connect } from "react-redux";
 
 
 
@@ -95,4 +96,11 @@ const NavbarComp = () => {
   )
 }
 
-export default NavbarComp
+const mapStateToProps = (state) => {
+  console.log('state', state)
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps)(NavbarComp)

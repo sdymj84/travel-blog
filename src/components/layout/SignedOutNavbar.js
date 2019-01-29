@@ -9,9 +9,9 @@ const SignedInNavbar = () => {
       <NavLink to='/signin'>
         <Nav.Link as='span'>Sign In</Nav.Link>
       </NavLink>
-      <NavLink to='/signup'>
+      {/* <NavLink to='/signup'>
         <Nav.Link as='span'>Sign Up</Nav.Link>
-      </NavLink>
+      </NavLink> */}
     </Nav>
   )
 }
