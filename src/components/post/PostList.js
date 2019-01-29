@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import { Container, Card, Row, Col } from 'react-bootstrap'
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 
 const StyledContainer = styled.div`
   .container {
@@ -74,8 +76,13 @@ export class PostList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.post.posts
+    posts: state.firestore.ordered.posts
   }
 }
 
-export default connect(mapStateToProps)(PostList)
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'posts' }
+  ])
+)(PostList)

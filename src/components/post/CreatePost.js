@@ -62,6 +62,7 @@ export class CreatePost extends Component {
   state = {
     country: "",
     title: "",
+    summary: "",
     content: "",
   }
 
@@ -115,6 +116,13 @@ export class CreatePost extends Component {
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>
                 <Form.Control type="text" placeholder="Title" onChange={this.handleChange} required />
+              </Col>
+            </Form.Group>
+            <hr />
+
+            <Form.Group as={Row} controlId="summary">
+              <Col sm={10}>
+                <Form.Control type="text" placeholder="Summary" onChange={this.handleChange} required />
               </Col>
             </Form.Group>
             <hr />
