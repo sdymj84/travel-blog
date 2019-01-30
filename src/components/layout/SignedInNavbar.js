@@ -7,13 +7,13 @@ import { connect } from "react-redux";
 const SignedInNavbar = (props) => {
   return (
     <Nav>
-      <NavLink to='/'>
+      {/* <NavLink to='/'>
         <Nav.Link as='span'>Posts</Nav.Link>
-      </NavLink>
+      </NavLink> */}
       <NavLink to='/create'>
         <Nav.Link as='span'>Create New Post</Nav.Link>
       </NavLink>
-      <NavLink to='/signout' onClick={props.signOut}>
+      <NavLink to='/' onClick={props.signOut}>
         <Nav.Link as='span'>Sign Out</Nav.Link>
       </NavLink>
     </Nav>

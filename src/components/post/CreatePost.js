@@ -7,6 +7,7 @@ import Dropzone from 'react-dropzone'
 import CountryDropdown from './CountryDropdown'
 import { connect } from "react-redux";
 import { createPost } from '../../actions/postActions'
+import { Redirect } from 'react-router-dom'
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -105,6 +106,11 @@ export class CreatePost extends Component {
   }
 
   render() {
+    const uid = this.props.uid
+    if (!uid) {
+      return <Redirect to='/' />
+    }
+
     return (
       <StyledContainer>
         <Container>
@@ -167,11 +173,17 @@ export class CreatePost extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    uid: state.firebase.auth.uid
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     createPost: (post) => dispatch(createPost(post))
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreatePost)
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePost)
 

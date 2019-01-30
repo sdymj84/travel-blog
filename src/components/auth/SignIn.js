@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Container, Form, Col, Row, Button, Alert } from 'react-bootstrap'
 import { connect } from "react-redux";
 import { signIn } from '../../actions/authActions'
+import { Redirect } from 'react-router-dom'
 
 
 const StyledContainer = styled.div`
@@ -36,7 +37,11 @@ export class SignIn extends Component {
   }
 
   render() {
-    const { authError } = this.props
+    const { authError, uid } = this.props
+    if (uid) {
+      return <Redirect to='/' />
+    }
+
     return (
       <StyledContainer>
         <Container>
@@ -86,9 +91,9 @@ export class SignIn extends Component {
 
 
 const mapStateToProps = (state) => {
-  console.log("authError:", state.auth.authError)
   return {
-    authError: state.auth.authError
+    authError: state.auth.authError,
+    uid: state.firebase.auth.uid
   }
 }
 

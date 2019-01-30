@@ -8,6 +8,7 @@ import PostList from './post/PostList'
 import PostDetail from './post/PostDetail'
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
+import NotFound from './home/NotFound';
 
 export class TravelBlog extends Component {
   render() {
@@ -22,6 +23,7 @@ export class TravelBlog extends Component {
             <Route path='/create' component={CreatePost} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
+            <Route path='*' component={NotFound} />
           </Switch>
           <Footer />
         </div>

@@ -77,7 +77,7 @@ const StyledNavbar = styled.div`
 
 `
 
-const NavbarComp = () => {
+const NavbarComp = (props) => {
   return (
     <StyledNavbar>
       <Navbar variant='dark' expand="md">
@@ -87,8 +87,7 @@ const NavbarComp = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <SignedInNavbar />
-            <SignedOutNavbar />
+            {props.uid ? <SignedInNavbar /> : <SignedOutNavbar />}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -99,7 +98,7 @@ const NavbarComp = () => {
 const mapStateToProps = (state) => {
   console.log('state', state)
   return {
-
+    uid: state.firebase.auth.uid
   }
 }
 
