@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import 'firebase/storage'
 
 //----------------------------------------------------
 // Initialize Firebase (copy from firebase dashboard)
@@ -14,7 +15,5 @@ var config = {
 };
 firebase.initializeApp(config);
 //----------------------------------------------------
-
-// firebase.firestore().settings({ timestampsInSnapshots: true })
 
 export default firebase

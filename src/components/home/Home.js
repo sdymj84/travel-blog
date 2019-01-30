@@ -4,6 +4,8 @@ import { Container } from 'react-bootstrap'
 import SvgComponent from './SvgComponent'
 import CountryCards from './CountryCards'
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 
 const StyledContainer = styled.div`
   .container {
@@ -109,7 +111,6 @@ const StyledWorldMap = styled(SvgComponent)`
 
 export class Home extends Component {
 
-  countries = this.props.countries
   ref = React.createRef();
 
   scrollToRef = () => {
@@ -124,6 +125,7 @@ export class Home extends Component {
   }
 
   render() {
+    const { countries } = this.props
     return (
       <StyledContainer>
         <div className='jumbo'>
@@ -131,7 +133,7 @@ export class Home extends Component {
         </div>
         <Container>
           <div ref={this.ref}></div>
-          <CountryCards countries={this.countries} />
+          <CountryCards countries={countries} />
         </Container>
       </StyledContainer >
     )
@@ -140,8 +142,14 @@ export class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    countries: state.post.countries
+    countries: state.firestore.ordered.countries
   }
 }
 
-export default connect(mapStateToProps)(Home)
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect(['countries'])
+)(Home)
+
+
+

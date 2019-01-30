@@ -1,8 +1,4 @@
 const initialState = {
-  test: {
-    country: "Minjun's world"
-  },
-
   countries: [
     {
       id: 1,
@@ -27,31 +23,17 @@ const initialState = {
     },
   ],
 
-  posts: [
-    {
-      id: 100,
-      title: "Seoul 3 days trip",
-      summary: "Eat Eat and Eat!",
-      mainImage: "/img/south-korea.jpg",
-      content: [
-        {
-          image: "/img/australia.jpg",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, quo? Consequatur laboriosam, quam fuga consectetur, incidunt dolores fugiat, non labore obcaecati temporibus optio accusantium neque facere tempora maiores commodi alias.",
-        },
-        {
-          image: "/img/usa.jpg",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, perferendis porro soluta reprehenderit doloremque est nesciunt a rerum excepturi in magni sit deleniti alias nulla iusto vel maiores? Voluptatem, repellendus.",
-        }
-      ]
-    }
-  ]
+  post_id: "",
 }
 
 const postReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_POST':
       console.log('added post', action.post)
-      return state
+      return {
+        ...state,
+        post_id: action.post.id
+      }
     case 'ADD_POST_ERROR':
       console.log('error while adding post', action.err)
       return state

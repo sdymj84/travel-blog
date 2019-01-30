@@ -29,47 +29,36 @@ const StyledContainer = styled.div`
 
 
 export class PostDetail extends Component {
-  post = this.props.post
-
-  output = this.post ?
-    <StyledContainer>
-      <Container fluid>
-        {/* <Image src={this.post.mainImage} fluid></Image> */}
-        <Image src="https://place-hold.it/300x300" fluid></Image>
-      </Container>
-      <Container>
-        <h1>{this.post.title}</h1>
-        <hr />
-        {this.post.content && this.post.content.map(content => {
-          return (
-            <Card key={content.cid}>
-              <Card.Img variant="top" src={content.image} />
-              <Card.Body>
-                <Card.Text>
-                  {content.body}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          )
-        })}
-      </Container>
-    </StyledContainer>
-    :
-    <StyledContainer>
-      <Container>
-        <h3>Loading data...</h3>
-      </Container>
-    </StyledContainer>
 
   render() {
+    const { post } = this.props
+
+    const output = post ?
+      <StyledContainer>
+        <Container fluid>
+          {/* <Image src={this.post.mainImage} fluid></Image> */}
+          <Image src={post.mainImage} fluid></Image>
+        </Container>
+        <Container>
+          <h1>{post.title}</h1>
+          <hr />
+          <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+        </Container>
+      </StyledContainer>
+      :
+      <StyledContainer>
+        <Container>
+          <h3>Loading data...</h3>
+        </Container>
+      </StyledContainer>
+
     return (
-      this.output
+      output
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state.firestore.data.posts)
   const id = ownProps.match.params.post_id
   const posts = state.firestore.data.posts
   const post = posts ? posts[id] : null

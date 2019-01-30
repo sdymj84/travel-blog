@@ -27,7 +27,6 @@ const StyledLink = styled(Link)`
   
 `
 
-
 const CountryCards = (props) => {
   const countries = props.countries
   return (

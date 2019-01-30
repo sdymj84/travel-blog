@@ -23,6 +23,27 @@ const StyledContainer = styled.div`
   .dropdown {
     margin-bottom: 1em;
   }
+
+  .form-control-file {
+    margin-top: 5px;
+  }
+
+  @media (min-width: 576px) {
+    #main-img-label {
+      margin-right: -3em;
+    }
+  }
+
+  #main-image {
+    border: 1px solid #CED4DA;
+    border-radius: 4px;
+    margin: 0;
+  }
+
+  #btn-upload {
+    padding-right: 0;
+  }
+
 `
 
 const getColor = (props) => {
@@ -65,6 +86,7 @@ export class CreatePost extends Component {
     title: "",
     summary: "",
     content: "",
+    selectedFile: "",
   }
 
   modules = {
@@ -103,6 +125,13 @@ export class CreatePost extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.createPost(this.state)
+    // this.props.history.push(`/post/${this.props.post_id}`)
+  }
+
+  handleSelectedFile = (e) => {
+    this.setState({
+      selectedFile: e.target.files[0]
+    })
   }
 
   render() {
@@ -124,18 +153,22 @@ export class CreatePost extends Component {
                 <Form.Control type="text" placeholder="Title" onChange={this.handleChange} required />
               </Col>
             </Form.Group>
-            <hr />
 
             <Form.Group as={Row} controlId="summary">
               <Col sm={10}>
                 <Form.Control type="text" placeholder="Summary" onChange={this.handleChange} required />
               </Col>
             </Form.Group>
-            <hr />
 
-            <Form.Group as={Row}>
-              <Col sm={10}>
-                <Dropzone accept="image/*">
+            <Form.Group as={Row} id="main-image">
+              <Form.Label column sm={4} md={3} lg={2} id="main-img-label">
+                Main Image :
+              </Form.Label>
+              <Col>
+                <Form.Control type='file' onChange={this.handleSelectedFile} />
+
+
+                {/* <Dropzone accept="image/*">
                   {({ getRootProps, isDragActive, isDragAccept, isDragReject, acceptedFiles }) => {
                     return (
                       <StyledDropzone
@@ -148,9 +181,10 @@ export class CreatePost extends Component {
                       </StyledDropzone>
                     )
                   }}
-                </Dropzone>
+                </Dropzone> */}
               </Col>
             </Form.Group>
+            <hr />
             <ReactQuill theme='snow'
               modules={this.modules}
               formats={this.formats}
@@ -161,7 +195,7 @@ export class CreatePost extends Component {
             </ReactQuill>
             <hr />
             <Form.Group as={Row} controlId="title">
-              <Col sm={{ span: 2 }}>
+              <Col sm={{ span: 3 }} md={{ span: 2 }}>
                 <Button as="input" type="submit" value="Submit" block />
               </Col>
             </Form.Group>
@@ -175,13 +209,14 @@ export class CreatePost extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    uid: state.firebase.auth.uid
+    uid: state.firebase.auth.uid,
+    post_id: state.post.post_id
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    createPost: (post) => dispatch(createPost(post))
+    createPost: (post) => dispatch(createPost(post, ownProps.history)),
   }
 }
 

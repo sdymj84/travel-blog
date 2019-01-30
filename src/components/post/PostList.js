@@ -41,15 +41,15 @@ const StyledLink = styled(Link)`
 
 
 export class PostList extends Component {
-  posts = this.props.posts
-
   render() {
+    const { posts } = this.props
+
     return (
       <StyledContainer>
         <Container>
           <Row>
 
-            {this.posts && this.posts.map(post => {
+            {posts && posts.map(post => {
               return (
                 <Col sm={6} lg={4} key={post.id}>
                   <StyledLink to={`/post/south-korea/${post.id}`}>
@@ -81,8 +81,6 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
+  firestoreConnect(['posts']),
   connect(mapStateToProps),
-  firestoreConnect([
-    { collection: 'posts' }
-  ])
 )(PostList)
