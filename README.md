@@ -4,11 +4,14 @@
 
 ## Skills
 - React, React Router, Redux
-- Firebase - Firestore
-- MaterializeCSS, UIKit, styled-components
+- Firebase - Firestore, Auth, Storage
+- react-bootstrap, styled-components
 ---
 
 ## App Details
+- Travel blog that only I can write/edit/delete. anyone can visit and read
+- Filter countries by continent using worldmap on main page
+- Contain all logic and style in each single component file using styled-components
 - 
 ---
 
@@ -31,3 +34,8 @@
 - Create Firebase Auth from website
 - Add to config
 - Setup signin/signout and route guard
+### 7. Setup Firebase Storage
+- Create Firebase Storage from website
+- Add to config
+- Add files from component > upload file on action creator
+- Add download link on firestore
