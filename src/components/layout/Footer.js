@@ -5,9 +5,6 @@ import { Container } from 'react-bootstrap'
 
 
 const StyledFooter = styled.div`
-  /* * {
-    outline: 1px solid red;
-  } */
   
   footer {
     margin-top: 5em;

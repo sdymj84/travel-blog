@@ -5,6 +5,7 @@ import { Container, Card, Row, Col } from 'react-bootstrap'
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { RingLoader } from "react-spinners";
 
 const StyledContainer = styled.div`
   .container {
@@ -39,38 +40,56 @@ const StyledLink = styled(Link)`
 
 `
 
+const Loading = styled.div`
+  margin-top: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+`
 
 export class PostList extends Component {
   render() {
     const { posts } = this.props
 
-    return (
-      <StyledContainer>
-        <Container>
-          <Row>
+    if (posts) {
+      return (
+        <StyledContainer>
+          <Container>
+            <Row>
+              {posts.map(post => {
+                return (
+                  <Col sm={6} lg={4} key={post.id}>
+                    <StyledLink to={`/post/south-korea/${post.id}`}>
+                      <Card>
+                        <Card.Img variant="top" src={post.mainImage} />
+                        <Card.Body>
+                          <Card.Title>{post.title}</Card.Title>
+                          <Card.Text>
+                            {post.summary}
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </StyledLink>
+                  </Col>
+                )
+              })}
+            </Row>
+          </Container>
+        </StyledContainer>
+      )
+    } else {
+      return (
+        <Loading>
+          <RingLoader
+            sizeUnit={"px"}
+            size={100}
+            color={'#308F9E'} />
+        </Loading>
+      )
+    }
 
-            {posts && posts.map(post => {
-              return (
-                <Col sm={6} lg={4} key={post.id}>
-                  <StyledLink to={`/post/south-korea/${post.id}`}>
-                    <Card>
-                      <Card.Img variant="top" src={post.mainImage} />
-                      <Card.Body>
-                        <Card.Title>{post.title}</Card.Title>
-                        <Card.Text>
-                          {post.summary}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </StyledLink>
-                </Col>
-              )
-            })}
 
-          </Row>
-        </Container>
-      </StyledContainer>
-    )
   }
 }
 

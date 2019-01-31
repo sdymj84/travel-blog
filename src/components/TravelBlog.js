@@ -9,6 +9,13 @@ import PostDetail from './post/PostDetail'
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import NotFound from './home/NotFound';
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  min-height: calc(100vh - 376px);
+}
+
+`
 
 export class TravelBlog extends Component {
   render() {
@@ -16,15 +23,17 @@ export class TravelBlog extends Component {
       <BrowserRouter>
         <div>
           <Navbar />
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/post/:country' component={PostList} />
-            <Route exact path='/post/:country/:post_id' component={PostDetail} />
-            <Route path='/create' component={CreatePost} />
-            <Route path='/signin' component={SignIn} />
-            <Route path='/signup' component={SignUp} />
-            <Route path='*' component={NotFound} />
-          </Switch>
+          <Wrapper>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/post/:country' component={PostList} />
+              <Route exact path='/post/:country/:post_id' component={PostDetail} />
+              <Route path='/create' component={CreatePost} />
+              <Route path='/signin' component={SignIn} />
+              <Route path='/signup' component={SignUp} />
+              <Route path='*' component={NotFound} />
+            </Switch>
+          </Wrapper>
           <Footer />
         </div>
       </BrowserRouter>
