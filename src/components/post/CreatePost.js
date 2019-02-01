@@ -8,20 +8,21 @@ import CountryDropdown from './CountryDropdown'
 import { connect } from "react-redux";
 import { createPost } from '../../actions/postActions'
 import { Redirect } from 'react-router-dom'
+import { TiPlus } from "react-icons/ti";
 
 const StyledContainer = styled.div`
   margin-top: 3em;
 
-  h1 {
+  h1, .dropdown, .btn-new-country {
     margin-bottom: 1em;
+  }
+
+  .btn-new-country {
+    margin-left: 1em;
   }
 
   hr {
     margin: 2em;
-  }
-
-  .dropdown {
-    margin-bottom: 1em;
   }
 
   .form-control-file {
@@ -42,6 +43,12 @@ const StyledContainer = styled.div`
 
   #btn-upload {
     padding-right: 0;
+  }
+
+  button svg {
+    position: relative;
+    top: 3px;
+    font-size: 1.1em;
   }
 
 `
@@ -147,6 +154,10 @@ export class CreatePost extends Component {
           <Form onSubmit={this.handleSubmit}>
 
             <CountryDropdown onChange={this.handleCountryChange} />
+            <Button
+              className="btn-new-country"
+              variant="light"
+            ><TiPlus /> New Country</Button>
 
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>

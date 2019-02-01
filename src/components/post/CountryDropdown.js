@@ -24,7 +24,7 @@ export class CountryDropdown extends Component {
         required>
         <option value="">Select Country</option>
         <option value="South Korea">South Korea</option>
-        <option value="Autralia">Autralia</option>
+        <option value="Australia">Australia</option>
         <option value="United States">United States</option>
       </StyledSelect>
     )

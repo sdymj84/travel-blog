@@ -5,7 +5,7 @@ import { Container, Card, Row, Col } from 'react-bootstrap'
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
-import { RingLoader } from "react-spinners";
+import Loader from '../layout/Loader'
 
 const StyledContainer = styled.div`
   .container {
@@ -40,27 +40,31 @@ const StyledLink = styled(Link)`
 
 `
 
-const Loading = styled.div`
-  margin-top: 3em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-`
-
 export class PostList extends Component {
-  render() {
-    const { posts } = this.props
 
-    if (posts) {
+  state = {
+    posts: "",
+  }
+
+  componentDidUpdate = () => {
+    if (!this.state.posts) {
+      this.setState({
+        posts: this.props.posts
+      })
+    }
+  }
+
+  render() {
+
+    if (this.state.posts) {
       return (
         <StyledContainer>
           <Container>
             <Row>
-              {posts.map(post => {
+              {this.state.posts.map(post => {
                 return (
                   <Col sm={6} lg={4} key={post.id}>
-                    <StyledLink to={`/post/south-korea/${post.id}`}>
+                    <StyledLink to={`/post/${post.countrySlug}/${post.id}`}>
                       <Card>
                         <Card.Img variant="top" src={post.mainImage} />
                         <Card.Body>
@@ -80,15 +84,9 @@ export class PostList extends Component {
       )
     } else {
       return (
-        <Loading>
-          <RingLoader
-            sizeUnit={"px"}
-            size={100}
-            color={'#308F9E'} />
-        </Loading>
+        <Loader />
       )
     }
-
 
   }
 }
@@ -100,6 +98,15 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-  firestoreConnect(['posts']),
+  firestoreConnect(props => [{
+    collection: 'posts',
+    where: ['countrySlug', '==', props.match.params.country]
+  }]
+  ),
   connect(mapStateToProps),
 )(PostList)
+
+
+
+
+

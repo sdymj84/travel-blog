@@ -34,7 +34,7 @@ const CountryCards = (props) => {
       {countries && countries.map(country => {
         return (
           <Col sm={6} lg={4} key={country.id}>
-            <StyledLink to="/post/south-korea">
+            <StyledLink to={`/post/${country.countrySlugName}`}>
               <Card className={country.continent}>
                 <Card.Img variant="top" src={country.photoUrl} />
                 <Card.Body>
