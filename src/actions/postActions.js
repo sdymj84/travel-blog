@@ -1,7 +1,7 @@
 import slugify from 'slugify'
 
 export const createPost = (post, history) => {
-  return (dispath, getState, { getFirebase, getFirestore }) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase()
     const db = getFirestore()
 
@@ -25,9 +25,39 @@ export const createPost = (post, history) => {
             post.id = doc.id
             // redirect to post detail page when db work is done
             history.push(`/post/${post.country}/${doc.id}`)
-            dispath({ type: 'ADD_POST', post })
+            dispatch({ type: 'ADD_POST', post })
           }).catch((err) => {
-            dispath({ type: 'ADD_POST_ERROR', err })
+            dispatch({ type: 'ADD_POST_ERROR', err })
+          })
+        })
+      })
+  }
+}
+
+export const createCountry = (country) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase()
+    const db = getFirestore()
+
+    // slugify country name and add to db
+    const countrySlugName = slugify(country.countryName, { lower: true })
+
+    // add image to firebase storage
+    const ref = firebase.storage().ref().child(`countries/${country.selectedFile.name}`)
+    ref.put(country.selectedFile)
+      .then(() => {
+        delete country.selectedFile
+
+        // after adding image, add country to db including image url from storage
+        ref.getDownloadURL().then(url => {
+          db.collection('countries').add({
+            ...country,
+            countrySlugName: countrySlugName,
+            photoUrl: url,
+          }).then((doc) => {
+            dispatch({ type: 'ADD_COUNTRY', country })
+          }).catch((err) => {
+            dispatch({ type: 'ADD_COUNTRY_ERROR', err })
           })
         })
       })
