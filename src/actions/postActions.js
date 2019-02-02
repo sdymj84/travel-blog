@@ -41,6 +41,7 @@ export const createCountry = (country) => {
 
     // slugify country name and add to db
     const countrySlugName = slugify(country.countryName, { lower: true })
+    const continentSlugName = slugify(country.continent, { lower: true })
 
     // add image to firebase storage
     const ref = firebase.storage().ref().child(`countries/${country.selectedFile.name}`)
@@ -53,6 +54,7 @@ export const createCountry = (country) => {
           db.collection('countries').add({
             ...country,
             countrySlugName: countrySlugName,
+            continentSlugName: continentSlugName,
             photoUrl: url,
           }).then((doc) => {
             dispatch({ type: 'ADD_COUNTRY', country })
@@ -63,3 +65,4 @@ export const createCountry = (country) => {
       })
   }
 }
+

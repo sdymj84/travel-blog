@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import 'react-quill/dist/quill.snow.css'
 import { connect } from "react-redux";
-import { createPost } from '../../actions/postActions'
+import { createCountry } from '../../actions/postActions'
 import { Redirect } from 'react-router-dom'
 import { TiPlus } from "react-icons/ti";
 import CreateCountryModal from './CreateCountryModal';
@@ -32,10 +32,20 @@ export class CreateCountry extends Component {
     })
   }
 
-  handleSubmit = () => {
-
+  handleContinentChange = (continent) => {
+    this.setState({ continent })
   }
 
+  handleSelectedFile = (e) => {
+    this.setState({
+      selectedFile: e.target.files[0]
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.createCountry(this.state)
+  }
 
   render() {
     return (
@@ -50,14 +60,18 @@ export class CreateCountry extends Component {
           onHide={this.modalClose}
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
+          handleContinentChange={this.handleContinentChange}
+          handleSelectedFile={this.handleSelectedFile}
         />
       </span>
     )
   }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    createCountry: (country) => dispatch(createCountry(country)),
   }
 }
 

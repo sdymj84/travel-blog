@@ -37,6 +37,12 @@ const postReducer = (state = initialState, action) => {
     case 'ADD_POST_ERROR':
       console.log('error while adding post', action.err)
       return state
+    case 'ADD_COUNTRY':
+      console.log('added country', action.country)
+      return state
+    case 'ADD_COUNTRY_ERROR':
+      console.log('error while adding country', action.err)
+      return state
     default:
       return state
   }

@@ -7,7 +7,7 @@ import CountryDropdown from './CountryDropdown'
 import { connect } from "react-redux";
 import { createPost } from '../../actions/postActions'
 import { Redirect } from 'react-router-dom'
-import { CreateCountry } from './CreateCountry';
+import CreateCountry from './CreateCountry';
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -98,6 +98,7 @@ export class CreatePost extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    console.log(this.props)
     this.props.createPost(this.state)
   }
 
@@ -117,10 +118,9 @@ export class CreatePost extends Component {
       <StyledContainer>
         <Container>
           <h1>Create new post</h1>
+          <CreateCountry />
           <Form onSubmit={this.handleSubmit}>
-
             <CountryDropdown onChange={this.handleCountryChange} />
-            <CreateCountry />
 
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>

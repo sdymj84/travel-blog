@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Button, Modal, Form, Col, Row } from 'react-bootstrap'
 import 'react-quill/dist/quill.snow.css'
+import ContinentDropdown from './ContinentDropdown'
 
 
 const StyledContainer = styled.div`
@@ -20,7 +21,8 @@ const StyledContainer = styled.div`
 export class CreateCountryModal extends Component {
 
   render() {
-    const { handleSubmit, handleChange, ...modalProps } = this.props
+    const { handleSubmit, handleChange, handleContinentChange,
+      handleSelectedFile, ...modalProps } = this.props
     return (
 
       <Modal
@@ -38,6 +40,7 @@ export class CreateCountryModal extends Component {
         <StyledContainer>
           <Form onSubmit={handleSubmit}>
             <Modal.Body>
+              <ContinentDropdown handleContinentChange={handleContinentChange} />
               <Form.Group controlId="countryName">
                 <Form.Control type="text" placeholder="Country Name" onChange={handleChange} required />
               </Form.Group>
@@ -51,7 +54,7 @@ export class CreateCountryModal extends Component {
                   Main Image :
                 </Form.Label>
                 <Col>
-                  <Form.Control type='file' onChange={this.handleSelectedFile} />
+                  <Form.Control type='file' onChange={handleSelectedFile} />
                 </Col>
               </Form.Group>
             </Modal.Body>
