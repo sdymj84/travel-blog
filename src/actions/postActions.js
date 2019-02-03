@@ -22,6 +22,13 @@ export const createPost = (post, history) => {
             mainImage: url,
             createdAt: new Date()
           }).then((doc) => {
+            // set 'howManyPosts' in country doc in countries db
+            db.collection('countries').where('countryName', '==', post.country)
+              .set({
+                howManyPosts: 1
+                // TODO: later, update code to increase this number
+              })
+
             post.id = doc.id
             // redirect to post detail page when db work is done
             history.push(`/post/${post.country}/${doc.id}`)
@@ -55,6 +62,7 @@ export const createCountry = (country) => {
             ...country,
             countrySlugName: countrySlugName,
             continentSlugName: continentSlugName,
+            howManyPosts: 0,
             photoUrl: url,
           }).then((doc) => {
             dispatch({ type: 'ADD_COUNTRY', country })

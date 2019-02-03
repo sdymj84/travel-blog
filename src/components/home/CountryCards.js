@@ -32,21 +32,23 @@ const CountryCards = (props) => {
   return (
     <Row>
       {countries && countries.map(country => {
-        return (
-          <Col sm={6} lg={4} key={country.id}>
-            <StyledLink to={`/post/${country.countrySlugName}`}>
-              <Card className={country.continent}>
-                <Card.Img variant="top" src={country.photoUrl} />
-                <Card.Body>
-                  <Card.Title>{country.countryName}</Card.Title>
-                  <Card.Text>
-                    {country.summary}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </StyledLink>
-          </Col>
-        )
+        if (country.howManyPosts) {
+          return (
+            <Col sm={6} lg={4} key={country.id}>
+              <StyledLink to={`/post/${country.countrySlugName}`}>
+                <Card className={country.continent}>
+                  <Card.Img variant="top" src={country.photoUrl} />
+                  <Card.Body>
+                    <Card.Title>{country.countryName}</Card.Title>
+                    <Card.Text>
+                      {country.summary}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </StyledLink>
+            </Col>
+          )
+        }
       })}
     </Row>
   )
