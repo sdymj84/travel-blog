@@ -45,6 +45,7 @@ export class CreateCountry extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.createCountry(this.state)
+    this.modalClose()
   }
 
   render() {

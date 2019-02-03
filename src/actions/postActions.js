@@ -23,15 +23,17 @@ export const createPost = (post, history) => {
             createdAt: new Date()
           }).then((doc) => {
             // set 'howManyPosts' in country doc in countries db
-            db.collection('countries').where('countryName', '==', post.country)
-              .set({
-                howManyPosts: 1
-                // TODO: later, update code to increase this number
+            const countryRef = db.collection('countries').where('countryName', '==', post.country).limit(1)
+            countryRef.get().then(querySnapshot => {
+              querySnapshot.forEach(doc => {
+                db.collection('countries').doc(doc.id).update({
+                  howManyPosts: doc.data().howManyPosts + 1,
+                })
               })
-
+            })
             post.id = doc.id
             // redirect to post detail page when db work is done
-            history.push(`/post/${post.country}/${doc.id}`)
+            history.history.push(`/post/${post.country}/${doc.id}`)
             dispatch({ type: 'ADD_POST', post })
           }).catch((err) => {
             dispatch({ type: 'ADD_POST_ERROR', err })

@@ -39,7 +39,7 @@ const CountryCards = (props) => {
                 <Card className={country.continent}>
                   <Card.Img variant="top" src={country.photoUrl} />
                   <Card.Body>
-                    <Card.Title>{country.countryName}</Card.Title>
+                    <Card.Title>{country.countryName} ({country.howManyPosts})</Card.Title>
                     <Card.Text>
                       {country.summary}
                     </Card.Text>

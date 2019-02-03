@@ -98,7 +98,6 @@ export class CreatePost extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.props)
     this.props.createPost(this.state)
   }
 
@@ -118,7 +117,7 @@ export class CreatePost extends Component {
       <StyledContainer>
         <Container>
           <h1>Create new post</h1>
-          <CreateCountry />
+          <CreateCountry history={this.props.history} />
           <Form onSubmit={this.handleSubmit}>
             <CountryDropdown onChange={this.handleCountryChange} />
 
