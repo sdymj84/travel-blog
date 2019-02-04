@@ -111,6 +111,10 @@ const StyledWorldMap = styled(SvgComponent)`
 
 export class Home extends Component {
 
+  state = {
+    countries: this.props.countries
+  }
+
   ref = React.createRef();
 
   scrollToRef = () => {
@@ -120,12 +124,26 @@ export class Home extends Component {
     })
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
+    const continent = e.target.parentElement.parentElement.id
     this.scrollToRef()
+    this.setState({
+      countries: this.props.countries.filter(country => {
+        return country.continentSlugName === continent
+      })
+    })
+  }
+
+  componentDidUpdate = () => {
+    if (!this.state.countries) {
+      this.setState({ countries: this.props.countries })
+    }
   }
 
   render() {
-    const { countries } = this.props
+    console.log("props:", this.props.countries)
+    console.log("state:", this.state.countries)
+    const { countries } = this.state
     return (
       <StyledContainer>
         <div className='jumbo'>
