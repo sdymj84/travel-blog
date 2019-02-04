@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Container, Form, Col, Row, Button } from 'react-bootstrap'
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
 import CountryDropdown from './CountryDropdown'
 import { connect } from "react-redux";
 import { createPost } from '../../actions/postActions'
 import { Redirect } from 'react-router-dom'
 import CreateCountry from './CreateCountry';
+import TextEditor from './TextEditor';
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -63,22 +62,6 @@ export class CreatePost extends Component {
     selectedFile: "",
   }
 
-  modules = {
-    toolbar: [
-      [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-      ['link', 'image'],
-      ['clean']
-    ],
-  }
-
-  formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image'
-  ]
 
   handleCountryChange = (country) => {
     this.setState({ country })
@@ -142,14 +125,19 @@ export class CreatePost extends Component {
               </Col>
             </Form.Group>
             <hr />
-            <ReactQuill theme='snow'
-              modules={this.modules}
-              formats={this.formats}
-              placeholder='Write content..'
-              value={this.state.content}
-              onChange={this.handleQuillChange}
-              required >
-            </ReactQuill>
+            <Row>
+              <Col sm={4}>
+                <div>+</div>
+              </Col>
+              <Col sm={7}>
+                <TextEditor
+                  handleQuillChange={this.handleQuillChange}
+                  content={this.state.content} />
+              </Col>
+              <Col sm={1}>
+                <Button>+</Button>
+              </Col>
+            </Row>
             <hr />
             <Form.Group as={Row} controlId="title">
               <Col sm={{ span: 3 }} md={{ span: 2 }}>
