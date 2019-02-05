@@ -7,6 +7,7 @@ import { createPost } from '../../actions/postActions'
 import { Redirect } from 'react-router-dom'
 import CreateCountry from './CreateCountry';
 import TextEditor from './TextEditor';
+import { TiPlus } from "react-icons/ti";
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -47,6 +48,37 @@ const StyledContainer = styled.div`
     position: relative;
     top: 3px;
     font-size: 1.1em;
+  }
+
+  .add-image {
+    border-style: dashed;
+    border-width: 2px;
+    font-size: 2em;
+    
+    @media (max-width: 576px) {
+      margin: 0 15px;
+      height: 3em;
+    }
+    
+    :hover {
+      background-color: #c7dadd;
+    }
+    :active {
+      position: relative;
+      top: 1px;
+    }
+  }
+  .add-image_btn {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-row {
+    display: flex;
+    align-items: flex-end;
   }
 
 `
@@ -125,19 +157,22 @@ export class CreatePost extends Component {
               </Col>
             </Form.Group>
             <hr />
-            <Row>
-              <Col sm={4}>
-                <div>+</div>
+            <Form.Group as={Row}>
+              <Col sm={4} className="add-image">
+                <Form.Label className="add-image_btn">
+                  <TiPlus />
+                  <Form.Control type='file' hidden />
+                </Form.Label>
               </Col>
               <Col sm={7}>
                 <TextEditor
                   handleQuillChange={this.handleQuillChange}
                   content={this.state.content} />
               </Col>
-              <Col sm={1}>
+              <Col sm={1} className="add-row">
                 <Button>+</Button>
               </Col>
-            </Row>
+            </Form.Group>
             <hr />
             <Form.Group as={Row} controlId="title">
               <Col sm={{ span: 3 }} md={{ span: 2 }}>
