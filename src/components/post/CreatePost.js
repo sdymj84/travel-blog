@@ -90,7 +90,17 @@ export class CreatePost extends Component {
     country: "",
     title: "",
     summary: "",
-    content: "",
+    contentRow: 2,
+    contents: [
+      {
+        image: "",
+        body: "a"
+      },
+      {
+        image: "",
+        body: "b"
+      }
+    ],
     selectedFile: "",
   }
 
@@ -105,10 +115,10 @@ export class CreatePost extends Component {
     })
   }
 
-  handleQuillChange = (value) => {
-    this.setState({
-      content: value
-    })
+  handleQuillChange = (value, i) => {
+    const contents = this.state.contents
+    contents[i].body = value
+    this.setState({ contents })
   }
 
   handleSubmit = (e) => {
@@ -126,6 +136,31 @@ export class CreatePost extends Component {
     const uid = this.props.uid
     if (!uid) {
       return <Redirect to='/' />
+    }
+
+    const contentRow = () => {
+      let output = []
+      for (let i = 0; i < this.state.contentRow; i++) {
+        output.push(
+          <Form.Group as={Row} key={i}>
+            <Col sm={4} className="add-image">
+              <Form.Label className="add-image_btn">
+                <TiPlus />
+                <Form.Control type='file' hidden />
+              </Form.Label>
+            </Col>
+            <Col sm={7}>
+              <TextEditor
+                handleQuillChange={(value) => this.handleQuillChange(value, i)}
+                content={this.state.contents[i].body} />
+            </Col>
+            <Col sm={1} className="add-row">
+              <Button>+</Button>
+            </Col>
+          </Form.Group>
+        )
+      }
+      return output
     }
 
     return (
@@ -157,22 +192,7 @@ export class CreatePost extends Component {
               </Col>
             </Form.Group>
             <hr />
-            <Form.Group as={Row}>
-              <Col sm={4} className="add-image">
-                <Form.Label className="add-image_btn">
-                  <TiPlus />
-                  <Form.Control type='file' hidden />
-                </Form.Label>
-              </Col>
-              <Col sm={7}>
-                <TextEditor
-                  handleQuillChange={this.handleQuillChange}
-                  content={this.state.content} />
-              </Col>
-              <Col sm={1} className="add-row">
-                <Button>+</Button>
-              </Col>
-            </Form.Group>
+            {contentRow()}
             <hr />
             <Form.Group as={Row} controlId="title">
               <Col sm={{ span: 3 }} md={{ span: 2 }}>
