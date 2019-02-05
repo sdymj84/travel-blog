@@ -141,8 +141,6 @@ export class Home extends Component {
   }
 
   render() {
-    console.log("props:", this.props.countries)
-    console.log("state:", this.state.countries)
     const { countries } = this.state
     return (
       <StyledContainer>

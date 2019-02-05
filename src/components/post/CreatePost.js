@@ -78,7 +78,23 @@ const StyledContainer = styled.div`
 
   .add-row {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+      width: 2.2em;
+      margin-bottom: 5px;
+      
+      @media (max-width: 576px) {
+        margin: 0 3px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      margin: 5px;
+      flex-direction: row;
+    }
   }
 
 `
@@ -132,15 +148,38 @@ export class CreatePost extends Component {
     })
   }
 
+  handleAddRowClick = (i) => {
+    const contents = this.state.contents
+    contents.splice(i + 1, 0, {
+      image: "",
+      body: ""
+    })
+    this.setState({
+      contents,
+      contentRow: this.state.contentRow + 1
+    })
+  }
+
+  handleRemoveRowClick = (i) => {
+    const contents = this.state.contents
+    contents.splice(i, 1)
+    this.setState({
+      contents,
+      contentRow: this.state.contentRow - 1
+    })
+  }
+
   render() {
     const uid = this.props.uid
     if (!uid) {
       return <Redirect to='/' />
     }
 
+    // save all contentRows in array and show
     const contentRow = () => {
+      const len = this.state.contentRow
       let output = []
-      for (let i = 0; i < this.state.contentRow; i++) {
+      for (let i = 0; i < len; i++) {
         output.push(
           <Form.Group as={Row} key={i}>
             <Col sm={4} className="add-image">
@@ -155,7 +194,11 @@ export class CreatePost extends Component {
                 content={this.state.contents[i].body} />
             </Col>
             <Col sm={1} className="add-row">
-              <Button>+</Button>
+              {len !== 1 ?
+                <Button variant="danger"
+                  onClick={() => this.handleRemoveRowClick(i)}>-</Button>
+                : null}
+              <Button onClick={() => this.handleAddRowClick(i)}>+</Button>
             </Col>
           </Form.Group>
         )
