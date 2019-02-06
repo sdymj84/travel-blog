@@ -50,7 +50,7 @@ export class CreateCountryModal extends Component {
               </Form.Group>
 
               <Form.Group as={Row} id="country-image">
-                <Form.Label column sm={4} md={3} lg={2} id="main-img-label">
+                <Form.Label column sm={4} md={4} lg={2} id="main-img-label">
                   Main Image :
                 </Form.Label>
                 <Col>

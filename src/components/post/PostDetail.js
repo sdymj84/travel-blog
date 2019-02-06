@@ -4,6 +4,7 @@ import { Container, Image, Card, Row, Col } from 'react-bootstrap'
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
+import ContentCards from "./ContentCards";
 
 const StyledContainer = styled.div`
   .container {
@@ -36,13 +37,12 @@ export class PostDetail extends Component {
     const output = post ?
       <StyledContainer>
         <Container fluid>
-          {/* <Image src={this.post.mainImage} fluid></Image> */}
           <Image src={post.mainImage} fluid></Image>
         </Container>
         <Container>
           <h1>{post.title}</h1>
           <hr />
-          <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+          <ContentCards contents={post.contents} />
         </Container>
       </StyledContainer>
       :

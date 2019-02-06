@@ -46,5 +46,8 @@ const mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect(['countries'])
+  firestoreConnect([{
+    collection: 'countries',
+    orderBy: 'countryName'
+  }])
 )(CountryDropdown)
