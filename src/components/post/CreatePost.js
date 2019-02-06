@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Container, Form, Col, Row, Button } from 'react-bootstrap'
+import { Container, Form, Col, Row, Button, Image } from 'react-bootstrap'
 import CountryDropdown from './CountryDropdown'
 import { connect } from "react-redux";
 import { createPost } from '../../actions/postActions'
@@ -54,6 +54,9 @@ const StyledContainer = styled.div`
     border-style: dashed;
     border-width: 2px;
     font-size: 2em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     
     @media (max-width: 576px) {
       margin: 0 15px;
@@ -99,6 +102,11 @@ const StyledContainer = styled.div`
 
 `
 
+// const Thumbnail = styled(Image)`
+//   width: 100%;
+//   height: 100%;
+// `
+
 
 export class CreatePost extends Component {
 
@@ -106,15 +114,11 @@ export class CreatePost extends Component {
     country: "",
     title: "",
     summary: "",
-    contentRow: 2,
+    contentRow: 1,
     contents: [
       {
         image: "",
-        body: "a"
-      },
-      {
-        image: "",
-        body: "b"
+        body: ""
       }
     ],
     selectedFile: "",
@@ -152,6 +156,7 @@ export class CreatePost extends Component {
     const contents = this.state.contents
     contents.splice(i + 1, 0, {
       image: "",
+      thumbnail: "",
       body: ""
     })
     this.setState({
@@ -169,6 +174,16 @@ export class CreatePost extends Component {
     })
   }
 
+  handleContentImage = (e, i) => {
+    const file = e.target.files[0]
+    if (file) {
+      const contents = this.state.contents
+      contents[i].image = e.target.files[0]
+      contents[i].thumbnail = URL.createObjectURL(e.target.files[0])
+      this.setState({ contents })
+    }
+  }
+
   render() {
     const uid = this.props.uid
     if (!uid) {
@@ -182,10 +197,16 @@ export class CreatePost extends Component {
       for (let i = 0; i < len; i++) {
         output.push(
           <Form.Group as={Row} key={i}>
-            <Col sm={4} className="add-image">
+            <Col sm={4} className='add-image'
+              style={this.state.contents[i].thumbnail ?
+                // { backgroundImage: `url(${this.state.contents[i].thumbnail})` }
+                { backgroundImage: `url(${this.state.contents[i].thumbnail})` }
+                : {}}>
               <Form.Label className="add-image_btn">
                 <TiPlus />
-                <Form.Control type='file' hidden />
+                <Form.Control type='file'
+                  onChange={(e) => this.handleContentImage(e, i)}
+                  hidden />
               </Form.Label>
             </Col>
             <Col sm={7}>
