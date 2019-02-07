@@ -3,11 +3,14 @@ import styled from 'styled-components'
 import { Container, Form, Col, Row, Button } from 'react-bootstrap'
 import CountryDropdown from './CountryDropdown'
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 import { createPost } from '../../actions/postActions'
 import { Redirect } from 'react-router-dom'
 import CreateCountry from './CreateCountry';
 import TextEditor from './TextEditor';
 import { TiPlus } from "react-icons/ti";
+import Loader from '../layout/Loader'
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -105,20 +108,13 @@ const StyledContainer = styled.div`
 
 export class CreatePost extends Component {
 
-  state = {
-    country: "",
-    title: "",
-    summary: "",
-    contentRow: 1,
-    contents: [
-      {
-        image: "",
-        body: ""
-      }
-    ],
-    selectedFile: "",
+  constructor(props) {
+    super(props)
+    const { post } = props
+    this.state = {
+      ...post,
+    }
   }
-
 
   handleCountryChange = (country) => {
     this.setState({ country })
@@ -126,7 +122,7 @@ export class CreatePost extends Component {
 
   handleChange = (e) => {
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     })
   }
 
@@ -181,12 +177,26 @@ export class CreatePost extends Component {
     }
   }
 
+  /* UNSAFE_componentWillMount = () => {
+    console.log('componentWillMount')
+    const { post } = this.props
+    if (post) this.setState({ ...post })
+  } */
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
+    const { post } = nextProps
+    if (post) this.setState({ ...post })
+  }
 
   render() {
     const uid = this.props.uid
     if (!uid) {
       return <Redirect to='/' />
     }
+    const { post } = this.props
+    if (!post) {
+      return <Loader />
+    }
+    console.log(this.state)
 
     // save all contentRows in array and show
     const contentRow = () => {
@@ -227,20 +237,24 @@ export class CreatePost extends Component {
     return (
       <StyledContainer>
         <Container>
-          <h1>Create new post</h1>
+          <h1>Edit post</h1>
           <CreateCountry history={this.props.history} />
           <Form onSubmit={this.handleSubmit}>
-            <CountryDropdown onChange={this.handleCountryChange} />
+            <CountryDropdown
+              selectedCountry={this.state.country}
+              onChange={this.handleCountryChange} />
 
             <Form.Group as={Row} controlId="title">
               <Col sm={10}>
-                <Form.Control type="text" placeholder="Title" onChange={this.handleChange} required />
+                <Form.Control type="text" placeholder="Title"
+                  value={this.state.title} onChange={this.handleChange} required />
               </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId="summary">
               <Col sm={10}>
-                <Form.Control type="text" placeholder="Summary" onChange={this.handleChange} required />
+                <Form.Control type="text" placeholder="Summary"
+                  value={this.state.summary} onChange={this.handleChange} required />
               </Col>
             </Form.Group>
 
@@ -260,7 +274,6 @@ export class CreatePost extends Component {
                 <Button as="input" type="submit" value="Submit" block />
               </Col>
             </Form.Group>
-
           </Form>
         </Container>
       </StyledContainer >
@@ -268,10 +281,13 @@ export class CreatePost extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.match.params.post_id
+  const posts = state.firestore.data.posts
+  const post = posts ? posts[id] : null
+  const uid = state.firebase.auth.uid
   return {
-    uid: state.firebase.auth.uid,
-    post_id: state.post.post_id
+    post, uid
   }
 }
 
@@ -281,5 +297,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePost)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect(['posts']),
+)(CreatePost)
 

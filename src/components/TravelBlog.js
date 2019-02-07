@@ -4,6 +4,7 @@ import Navbar from './layout/Navbar'
 import Footer from './layout/Footer'
 import Home from './home/Home'
 import CreatePost from './post/CreatePost';
+import EditPost from './post/EditPost'
 import PostList from './post/PostList'
 import PostDetail from './post/PostDetail'
 import SignIn from './auth/SignIn';
@@ -28,6 +29,7 @@ export class TravelBlog extends Component {
               <Route exact path='/post/:country' component={PostList} />
               <Route exact path='/post/:country/:post_id' component={PostDetail} />
               <Route path='/create' component={CreatePost} />
+              <Route path='/edit/:post_id' component={EditPost} />
               <Route path='/signin' component={SignIn} />
               <Route path='/signup' component={SignUp} />
               <Route path='*' component={NotFound} />

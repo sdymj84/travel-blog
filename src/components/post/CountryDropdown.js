@@ -23,7 +23,7 @@ export class CountryDropdown extends Component {
     const { countries } = this.props
     return (
       <StyledSelect className="btn btn-info"
-        value={this.state.selectedCountry}
+        value={this.props.selectedCountry || this.state.selectedCountry}
         onChange={this.handleChange}
         required>
         <option value="">Select Country</option>

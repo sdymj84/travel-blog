@@ -114,3 +114,14 @@ export const createCountry = (country) => {
   }
 }
 
+
+export const deletePost = (postId, history) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase()
+    const db = getFirestore()
+
+    console.log(postId, history)
+    console.log('deleted')
+    history.push('/')
+  }
+}
