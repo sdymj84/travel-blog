@@ -28,18 +28,24 @@ const StyledLink = styled(Link)`
 `
 
 const CountryCards = (props) => {
-  const countries = props.countries
+  const { countries, posts } = props
   return (
     <Row>
       {countries && countries.map(country => {
-        if (country.howManyPosts) {
+
+        // get how many posts each country has
+        const howManyPosts = posts && posts.filter(post => {
+          return post.country === country.countryName
+        }).length
+
+        if (howManyPosts) {
           return (
             <Col sm={6} lg={4} key={country.id}>
               <StyledLink to={`/post/${country.countrySlugName}`}>
                 <Card className={country.continent}>
                   <Card.Img variant="top" src={country.photoUrl} />
                   <Card.Body>
-                    <Card.Title>{country.countryName} ({country.howManyPosts})</Card.Title>
+                    <Card.Title>{country.countryName} ({howManyPosts})</Card.Title>
                     <Card.Text>
                       {country.summary}
                     </Card.Text>

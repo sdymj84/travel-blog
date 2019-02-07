@@ -142,6 +142,8 @@ export class Home extends Component {
 
   render() {
     const { countries } = this.state
+    let { posts } = this.props
+
     return (
       <StyledContainer>
         <div className='jumbo'>
@@ -149,7 +151,7 @@ export class Home extends Component {
         </div>
         <Container>
           <div ref={this.ref}></div>
-          <CountryCards countries={countries} />
+          <CountryCards countries={countries} posts={posts} />
         </Container>
       </StyledContainer >
     )
@@ -158,13 +160,19 @@ export class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    countries: state.firestore.ordered.countries
+    countries: state.firestore.ordered.countries,
+    posts: state.firestore.ordered.posts
   }
 }
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect(['countries'])
+  firestoreConnect([
+    { collection: 'countries' },
+    {
+      collection: 'posts',
+    }
+  ])
 )(Home)
 
 

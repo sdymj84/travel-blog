@@ -35,13 +35,19 @@ const postReducer = (state = initialState, action) => {
         post_id: action.post.id
       }
     case 'ADD_POST_ERROR':
-      console.log('error while adding post', action.err)
+      console.log('Error while adding post', action.err)
       return state
     case 'ADD_COUNTRY':
-      console.log('added country', action.country)
+      console.log('Post is successfully added to database', action.country)
       return state
     case 'ADD_COUNTRY_ERROR':
-      console.log('error while adding country', action.err)
+      console.log('Error while adding country', action.err)
+      return state
+    case 'DELETE_POST':
+      console.log('Database document is deleted')
+      return state
+    case 'DELETE_POST_ERROR':
+      console.log("Error while deleting document from db :", action.err)
       return state
     default:
       return state

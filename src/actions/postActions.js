@@ -34,10 +34,7 @@ export const createPost = (post, history) => {
         ref.put(content.image).then(() => {
           ref.getDownloadURL().then(url => {
             content.image = url
-            console.log(content.image)
-            console.log('i :', i)
             if (contentsLen === i + 1) {
-              console.log('now resolve, i: ', i)
               resolve("content images upload finish")
             }
           })
@@ -51,15 +48,12 @@ export const createPost = (post, history) => {
     // execute db insert logic after storage logic is finished
     Promise.all([uploadMain, uploadContent]).then((msg) => {
       console.log(msg)
-      console.log('posts :', post)
-      console.log('db :', db)
       db.collection('posts').add({
         ...post,
         countrySlug: countrySlug,
         createdAt: new Date()
       }).then((doc) => {
-        console.log("got in db then")
-        // set 'howManyPosts' in country doc in countries db
+        /* // set 'howManyPosts' in country doc in countries db
         const countryRef = db.collection('countries').where('countryName', '==', post.country).limit(1)
         countryRef.get().then(querySnapshot => {
           querySnapshot.forEach(doc => {
@@ -67,8 +61,7 @@ export const createPost = (post, history) => {
               howManyPosts: doc.data().howManyPosts + 1,
             })
           })
-        })
-        console.log("db added")
+        }) */
         post.id = doc.id
         // redirect to post detail page when db work is done
         history.push(`/post/${post.country}/${doc.id}`)
@@ -120,8 +113,47 @@ export const deletePost = (postId, history) => {
     const firebase = getFirebase()
     const db = getFirestore()
 
-    console.log(postId, history)
-    console.log('deleted')
+    /* 
+      1. get db doc by postId
+      2. get ref by http url from db
+      3. delete images from storage using url
+      4. delete doc from db
+    */
+    const postDoc = db.collection('posts').doc(postId)
+    postDoc.get()
+      .then(doc => {
+        new Promise((resolve, reject) => {
+          const mainImage = doc.data().mainImage
+          // delete mainImage from storage
+          deleteImage(mainImage, firebase)
+          doc.data().contents.map((content, i) => {
+            const contentImage = content.image
+            // delete contentImage from storage
+            deleteImage(contentImage, firebase)
+            if (i === doc.data().contents.length - 1) {
+              resolve()
+            }
+          })
+        }).then(() => {
+          postDoc.delete().then(() => {
+            dispatch({ type: 'DELETE_POST' })
+          }).catch(err => {
+            dispatch({ type: 'DELETE_POST_ERROR' })
+          })
+        })
+      }).catch(err => {
+        console.log("Error while getting data from db :", err)
+      })
+
     history.push('/')
   }
+}
+
+const deleteImage = (imageUrl, firebase) => {
+  const ref = firebase.storage().refFromURL(imageUrl)
+  ref.delete().then(() => {
+    console.log("Deleted from Storage")
+  }).catch(err => {
+    console.log("Error while deleting image from storage :", err)
+  })
 }
