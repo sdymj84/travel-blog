@@ -107,7 +107,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(ownProps)
   return {
     deletePost: (postId) => dispatch(deletePost(postId, ownProps.history))
   }

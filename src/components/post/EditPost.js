@@ -106,14 +106,20 @@ const StyledContainer = styled.div`
 `
 
 
-export class CreatePost extends Component {
+export class EditPost extends Component {
 
-  constructor(props) {
-    super(props)
-    const { post } = props
-    this.state = {
-      ...post,
-    }
+  state = {
+    country: "",
+    title: "",
+    summary: "",
+    contentRow: 1,
+    contents: [
+      {
+        image: "",
+        body: ""
+      }
+    ],
+    selectedFile: "",
   }
 
   handleCountryChange = (country) => {
@@ -128,7 +134,7 @@ export class CreatePost extends Component {
 
   handleQuillChange = (value, i) => {
     const { contents } = this.state
-    contents[i].body = value
+    contents[0].body = value
     this.setState({ contents })
   }
 
@@ -184,7 +190,11 @@ export class CreatePost extends Component {
   } */
   UNSAFE_componentWillReceiveProps = (nextProps) => {
     const { post } = nextProps
-    if (post) this.setState({ ...post })
+    console.log(post.contents)
+
+    if (post) {
+      this.setState({ ...post })
+    }
   }
 
   render() {
@@ -196,6 +206,7 @@ export class CreatePost extends Component {
     if (!post) {
       return <Loader />
     }
+
     console.log(this.state)
 
     // save all contentRows in array and show
@@ -268,12 +279,6 @@ export class CreatePost extends Component {
             </Form.Group>
             <hr />
             {contentRow()}
-            <hr />
-            <Form.Group as={Row} controlId="title">
-              <Col sm={{ span: 3 }} md={{ span: 2 }}>
-                <Button as="input" type="submit" value="Submit" block />
-              </Col>
-            </Form.Group>
           </Form>
         </Container>
       </StyledContainer >
@@ -300,5 +305,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect(['posts']),
-)(CreatePost)
+)(EditPost)
 
