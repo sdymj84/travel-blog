@@ -5,13 +5,12 @@ import CountryDropdown from './CountryDropdown'
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
-import { createPost } from '../../actions/postActions'
+import { editPost } from "../../actions/postActions";
 import { Redirect } from 'react-router-dom'
 import CreateCountry from './CreateCountry';
 import TextEditor from './TextEditor';
 import { TiPlus } from "react-icons/ti";
 import Loader from '../layout/Loader'
-import update from 'immutability-helper'
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -120,7 +119,39 @@ export class EditPost extends Component {
         body: ""
       }
     ],
-    selectedFile: "",
+    mainImage: "",
+  }
+
+
+  UNSAFE_componentWillMount = () => {
+    this.setStateFromProps(this.props)
+  }
+
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
+    this.setStateFromProps(nextProps)
+  }
+
+  setStateFromProps = (props) => {
+    const { post } = props
+
+    if (post) {
+      this.setState({
+        country: post.country,
+        title: post.title,
+        summary: post.summary,
+        contentRow: post.contentRow,
+        mainImage: post.mainImage,
+      })
+      post.contents.map((content, i) => {
+        this.state.contents.push({
+          image: "",
+          body: ""
+        })
+        this.state.contents[i].image = content.image
+        this.state.contents[i].body = content.body
+      })
+      this.forceUpdate()
+    }
   }
 
   handleCountryChange = (country) => {
@@ -141,12 +172,12 @@ export class EditPost extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.createPost(this.state)
+    this.props.editPost(this.state, this.props.match.params.post_id)
   }
 
   handleSelectedFile = (e) => {
     this.setState({
-      selectedFile: e.target.files[0]
+      mainImage: e.target.files[0]
     })
   }
 
@@ -184,33 +215,7 @@ export class EditPost extends Component {
     }
   }
 
-  /* UNSAFE_componentWillMount = () => {
-    console.log('componentWillMount')
-    const { post } = this.props
-    if (post) this.setState({ ...post })
-  } */
-  UNSAFE_componentWillReceiveProps = (nextProps) => {
-    const { post } = nextProps
 
-    if (post) {
-      this.setState({
-        country: post.country,
-        title: post.title,
-        summary: post.summary,
-        contentRow: post.contentRow,
-        selectedFile: post.selectedFile,
-      })
-      post.contents.map((content, i) => {
-        this.state.contents.push({
-          image: "",
-          body: ""
-        })
-        this.state.contents[i].image = content.image
-        this.state.contents[i].body = content.body
-      })
-      this.forceUpdate()
-    }
-  }
 
   render() {
     const uid = this.props.uid
@@ -294,6 +299,13 @@ export class EditPost extends Component {
             </Form.Group>
             <hr />
             {contentRow()}
+            <hr />
+            <Form.Group as={Row} controlId="title">
+              <Col sm={{ span: 3 }} md={{ span: 2 }}>
+                <Button as="input" type="submit" value="Submit" block />
+              </Col>
+            </Form.Group>
+
           </Form>
         </Container>
       </StyledContainer >
@@ -313,7 +325,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    createPost: (post) => dispatch(createPost(post, ownProps.history)),
+    editPost: (post, postId) =>
+      dispatch(editPost(post, postId, ownProps.history)),
   }
 }
 

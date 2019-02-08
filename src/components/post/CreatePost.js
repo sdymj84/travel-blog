@@ -116,7 +116,7 @@ export class CreatePost extends Component {
         body: ""
       }
     ],
-    selectedFile: "",
+    mainImage: "",
   }
 
 
@@ -143,7 +143,7 @@ export class CreatePost extends Component {
 
   handleSelectedFile = (e) => {
     this.setState({
-      selectedFile: e.target.files[0]
+      mainImage: e.target.files[0]
     })
   }
 

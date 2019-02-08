@@ -167,12 +167,7 @@ const mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    { collection: 'countries' },
-    {
-      collection: 'posts',
-    }
-  ])
+  firestoreConnect(['countries', 'posts'])
 )(Home)
 
 
