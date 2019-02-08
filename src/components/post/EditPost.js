@@ -11,6 +11,7 @@ import CreateCountry from './CreateCountry';
 import TextEditor from './TextEditor';
 import { TiPlus } from "react-icons/ti";
 import Loader from '../layout/Loader'
+import update from 'immutability-helper'
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -134,7 +135,7 @@ export class EditPost extends Component {
 
   handleQuillChange = (value, i) => {
     const { contents } = this.state
-    contents[0].body = value
+    contents[i].body = value
     this.setState({ contents })
   }
 
@@ -190,10 +191,24 @@ export class EditPost extends Component {
   } */
   UNSAFE_componentWillReceiveProps = (nextProps) => {
     const { post } = nextProps
-    console.log(post.contents)
 
     if (post) {
-      this.setState({ ...post })
+      this.setState({
+        country: post.country,
+        title: post.title,
+        summary: post.summary,
+        contentRow: post.contentRow,
+        selectedFile: post.selectedFile,
+      })
+      post.contents.map((content, i) => {
+        this.state.contents.push({
+          image: "",
+          body: ""
+        })
+        this.state.contents[i].image = content.image
+        this.state.contents[i].body = content.body
+      })
+      this.forceUpdate()
     }
   }
 
