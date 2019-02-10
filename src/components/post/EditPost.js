@@ -38,9 +38,10 @@ const StyledContainer = styled.div`
   }
 
   #main-image {
-    border: 1px solid #CED4DA;
+    /* border: 1px solid #CED4DA;
     border-radius: 4px;
-    margin: 0;
+    margin: 0; */
+    height: 5em;
   }
 
   #btn-upload {
@@ -119,7 +120,8 @@ export class EditPost extends Component {
         body: ""
       }
     ],
-    mainImage: "",
+    image: "",
+    thumbnail: "",
   }
 
 
@@ -140,7 +142,7 @@ export class EditPost extends Component {
         title: post.title,
         summary: post.summary,
         contentRow: post.contentRow,
-        mainImage: post.mainImage,
+        image: post.image,
       })
       post.contents.map((content, i) => {
         this.state.contents.push({
@@ -175,10 +177,26 @@ export class EditPost extends Component {
     this.props.editPost(this.state, this.props.match.params.post_id)
   }
 
-  handleSelectedFile = (e) => {
-    this.setState({
-      mainImage: e.target.files[0]
-    })
+  handleImage = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      this.setState({
+        image: file,
+        thumbnail: URL.createObjectURL(file)
+      })
+    }
+  }
+
+  handleContentImage = (e, i) => {
+    const file = e.target.files[0]
+    // error occur without condition 
+    // because when cancel file window -> URL.createObjectURL(null)
+    if (file) {
+      const contents = this.state.contents
+      contents[i].image = e.target.files[0]
+      contents[i].thumbnail = URL.createObjectURL(e.target.files[0])
+      this.setState({ contents })
+    }
   }
 
   handleAddRowClick = (i) => {
@@ -203,19 +221,6 @@ export class EditPost extends Component {
     })
   }
 
-  handleContentImage = (e, i) => {
-    const file = e.target.files[0]
-    // error occur without condition 
-    // because when cancel file window -> URL.createObjectURL(null)
-    if (file) {
-      const contents = this.state.contents
-      contents[i].image = e.target.files[0]
-      contents[i].thumbnail = URL.createObjectURL(e.target.files[0])
-      this.setState({ contents })
-    }
-  }
-
-
 
   render() {
     const uid = this.props.uid
@@ -239,7 +244,7 @@ export class EditPost extends Component {
             <Col sm={4} className='add-image'
               style={this.state.contents[i].thumbnail ?
                 { backgroundImage: `url(${this.state.contents[i].thumbnail})` }
-                : {}}>
+                : { backgroundImage: `url(${this.state.contents[i].image})` }}>
               <Form.Label className="add-image_btn">
                 <TiPlus />
                 <Form.Control type='file'
@@ -293,8 +298,16 @@ export class EditPost extends Component {
               <Form.Label column sm={4} md={3} lg={2} id="main-img-label">
                 Main Image :
               </Form.Label>
-              <Col>
-                <Form.Control type='file' onChange={this.handleSelectedFile} />
+              <Col sm={4} className='add-image'
+                style={this.state.thumbnail ?
+                  { backgroundImage: `url(${this.state.thumbnail})` }
+                  : { backgroundImage: `url(${this.state.image})` }}>
+                <Form.Label className="add-image_btn">
+                  <TiPlus />
+                  <Form.Control type='file'
+                    onChange={this.handleImage}
+                    hidden />
+                </Form.Label>
               </Col>
             </Form.Group>
             <hr />

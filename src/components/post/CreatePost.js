@@ -35,9 +35,10 @@ const StyledContainer = styled.div`
   }
 
   #main-image {
-    border: 1px solid #CED4DA;
+    /* border: 1px solid #CED4DA;
     border-radius: 4px;
-    margin: 0;
+    margin: 0; */
+    height: 5em;
   }
 
   #btn-upload {
@@ -116,7 +117,8 @@ export class CreatePost extends Component {
         body: ""
       }
     ],
-    mainImage: "",
+    image: "",
+    thumbnail: "",
   }
 
 
@@ -141,10 +143,26 @@ export class CreatePost extends Component {
     this.props.createPost(this.state)
   }
 
-  handleSelectedFile = (e) => {
-    this.setState({
-      mainImage: e.target.files[0]
-    })
+  handleImage = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      this.setState({
+        image: file,
+        thumbnail: URL.createObjectURL(file)
+      })
+    }
+  }
+
+  handleContentImage = (e, i) => {
+    const file = e.target.files[0]
+    // error occur without condition 
+    // because when cancel file window -> URL.createObjectURL(null)
+    if (file) {
+      const contents = this.state.contents
+      contents[i].image = e.target.files[0]
+      contents[i].thumbnail = URL.createObjectURL(e.target.files[0])
+      this.setState({ contents })
+    }
   }
 
   handleAddRowClick = (i) => {
@@ -167,18 +185,6 @@ export class CreatePost extends Component {
       contents,
       contentRow: this.state.contentRow - 1
     })
-  }
-
-  handleContentImage = (e, i) => {
-    const file = e.target.files[0]
-    // error occur without condition 
-    // because when cancel file window -> URL.createObjectURL(null)
-    if (file) {
-      const contents = this.state.contents
-      contents[i].image = e.target.files[0]
-      contents[i].thumbnail = URL.createObjectURL(e.target.files[0])
-      this.setState({ contents })
-    }
   }
 
 
@@ -246,10 +252,18 @@ export class CreatePost extends Component {
 
             <Form.Group as={Row} id="main-image">
               <Form.Label column sm={4} md={3} lg={2} id="main-img-label">
-                Main Image :
+                Main Image
               </Form.Label>
-              <Col>
-                <Form.Control type='file' onChange={this.handleSelectedFile} />
+              <Col sm={4} className='add-image'
+                style={this.state.thumbnail ?
+                  { backgroundImage: `url(${this.state.thumbnail})` }
+                  : {}}>
+                <Form.Label className="add-image_btn">
+                  <TiPlus />
+                  <Form.Control type='file'
+                    onChange={this.handleImage}
+                    hidden />
+                </Form.Label>
               </Col>
             </Form.Group>
             <hr />

@@ -68,7 +68,7 @@ export class PostDetail extends Component {
     return (
       <StyledContainer>
         <Container fluid>
-          <Image src={post.mainImage} fluid></Image>
+          <Image src={post.image} fluid></Image>
         </Container>
         <Container>
           <div className="title-container">

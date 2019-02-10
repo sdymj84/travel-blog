@@ -66,7 +66,7 @@ export class PostList extends Component {
                   <Col sm={6} lg={4} key={post.id}>
                     <StyledLink to={`/post/${post.countrySlug}/${post.id}`}>
                       <Card>
-                        <Card.Img variant="top" src={post.mainImage} />
+                        <Card.Img variant="top" src={post.image} />
                         <Card.Body>
                           <Card.Title>{post.title}</Card.Title>
                           <Card.Text>
