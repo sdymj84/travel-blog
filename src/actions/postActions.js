@@ -28,8 +28,7 @@ export const createPost = (post, history) => {
 
     // execute db insert logic after storage logic is finished
     Promise.all([uploadMain, uploadContent]).then((msg) => {
-      console.log('promise msg :', msg)
-      console.log('post', post)
+      console.log(msg)
       db.collection('posts').add({
         ...post,
         countrySlug: countrySlug,
@@ -122,54 +121,6 @@ export const deletePost = (postId, history) => {
   }
 }
 
-const deleteImage = (urlToDelete, firebase) => {
-  if (urlToDelete) {
-    const ref = firebase.storage().refFromURL(urlToDelete)
-    ref.delete().then(() => {
-      console.log("Deleted from Storage")
-    }).catch(err => {
-      console.log("Error while deleting image from storage :", err)
-    })
-  }
-}
-
-// get object that hold image file property
-// upload image to storage and change image prop from file to url
-const addImage = (object, firebase) => {
-  return new Promise((resolve, reject) => {
-    const ref = firebase.storage().ref()
-      .child(`posts/${object.image.name}`)
-    // add image to firebase storage
-    console.log('addImage:', object)
-    if (object.image) {
-      ref.put(object.image).then(() => {
-        ref.getDownloadURL().then(url => {
-          // change file prop to url because file object cannot be uploaded to db
-          object.image = url
-          resolve("Image uploaded to storage successfully")
-        })
-      }).catch(err => {
-        reject("Error while adding image to storage" + err)
-      })
-    } else {
-      resolve("image is empty :", object)
-    }
-
-  })
-}
-
-const editImage = (object, urlToDelete, firebase) => {
-  // if there's thumbnail, it means image is changed
-  // if image not changed, do nothing
-  if (object.thumbnail) {
-    console.log('editImage', object)
-    deleteImage(urlToDelete, firebase)
-    return addImage(object, firebase)
-  } else {
-    console.log('image not changed')
-  }
-}
-
 
 export const editPost = (newPost, postId, history) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -213,3 +164,69 @@ export const editPost = (newPost, postId, history) => {
       })
   }
 }
+
+
+
+const deleteImage = (urlToDelete, firebase) => {
+  if (urlToDelete) {
+    const ref = firebase.storage().refFromURL(urlToDelete)
+    ref.delete().then(() => {
+      console.log("Deleted image from storage")
+    }).catch(err => {
+      console.log("Error while deleting image from storage :", err)
+    })
+  }
+}
+
+// get object that hold image file property
+// upload image to storage and change image prop from file to url
+const addImage = (object, firebase) => {
+  return new Promise((resolve, reject) => {
+    const ref = firebase.storage().ref()
+      .child(`posts/${object.image.name}`)
+    // add image to firebase storage
+    if (object.image) {
+      const uploadTask = ref.put(object.image)
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          // in progress
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        }, (err) => {
+          // when error occurred
+          reject("Error while adding image to storage" + err)
+        }, () => {
+          // upon completion
+          ref.getDownloadURL().then(url => {
+            // change file prop to url because file object cannot be uploaded to db
+            object.image = url
+            resolve("Image uploaded to storage successfully")
+          })
+        })
+    } else {
+      resolve("image is empty :", object)
+    }
+
+  })
+}
+
+const editImage = (object, urlToDelete, firebase) => {
+  // if there's thumbnail, it means image is changed
+  // if image not changed, do nothing
+  if (object.thumbnail) {
+    deleteImage(urlToDelete, firebase)
+    return addImage(object, firebase)
+  } else {
+    console.log('image not changed')
+  }
+}
+
+

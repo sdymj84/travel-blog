@@ -38,10 +38,9 @@ const StyledContainer = styled.div`
   }
 
   #main-image {
-    /* border: 1px solid #CED4DA;
-    border-radius: 4px;
-    margin: 0; */
-    height: 5em;
+    @media (min-width: 576px) {
+      height: 5em;
+    }
   }
 
   #btn-upload {
