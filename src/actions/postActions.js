@@ -123,12 +123,14 @@ export const deletePost = (postId, history) => {
 }
 
 const deleteImage = (urlToDelete, firebase) => {
-  const ref = firebase.storage().refFromURL(urlToDelete)
-  ref.delete().then(() => {
-    console.log("Deleted from Storage")
-  }).catch(err => {
-    console.log("Error while deleting image from storage :", err)
-  })
+  if (urlToDelete) {
+    const ref = firebase.storage().refFromURL(urlToDelete)
+    ref.delete().then(() => {
+      console.log("Deleted from Storage")
+    }).catch(err => {
+      console.log("Error while deleting image from storage :", err)
+    })
+  }
 }
 
 // get object that hold image file property
@@ -156,35 +158,16 @@ const addImage = (object, firebase) => {
   })
 }
 
-const editImage = (object, urlArrToDelete, firebase) => {
-  return new Promise((resolve, reject) => {
-    // if there's thumbnail, it means image is changed
-    // if image not changed, do nothing
-
-    // TODO: fix to upload content images properly
-
-    if (object.thumbnail) {
-      console.log('editImage', object)
-      urlArrToDelete.forEach(urlToDelete => {
-        deleteImage(urlToDelete, firebase)
-      })
-
-      const promises = []
-      object.contents.map((content) => {
-        const promise = addImage(content, firebase)
-        promises.push(promise)
-      })
-      Promise.all(promises)
-        .then(() => {
-          resolve("[editImage] addImage finished")
-        })
-        .catch(err => {
-          reject("[editImage] rejected while adding images", err.message)
-        })
-    } else {
-      resolve()
-    }
-  })
+const editImage = (object, urlToDelete, firebase) => {
+  // if there's thumbnail, it means image is changed
+  // if image not changed, do nothing
+  if (object.thumbnail) {
+    console.log('editImage', object)
+    deleteImage(urlToDelete, firebase)
+    return addImage(object, firebase)
+  } else {
+    console.log('image not changed')
+  }
 }
 
 
@@ -207,52 +190,26 @@ export const editPost = (newPost, postId, history) => {
         })
       })
       .then(() => {
-        if (newPost.thumbnail) {
-          return editImage(newPost, imageUrls, firebase)
-        }
+        return editImage(newPost, imageUrls[0], firebase)
+      }).then(() => {
+        const promises = []
+        newPost.contents.forEach((content, i) => {
+          const promise = editImage(content, imageUrls[i + 1], firebase)
+          promises.push(promise)
+        })
+        return Promise.all(promises)
       }).then(() => {
         currentDoc.update({
           ...newPost,
           countrySlug,
         }).then(() => {
-          console.log("Successfully updated database")
-        }).catch(err => {
-          console.log('Error while updating database', err.message)
+          newPost.id = postId
+          // redirect to post detail page when db work is done
+          history.push(`/post/${newPost.country}/${postId}`)
+          dispatch({ type: 'EDIT_POST', newPost })
+        }).catch((err) => {
+          dispatch({ type: 'EDIT_POST_ERROR', err })
         })
       })
-
-
-    /* 
-  
-    // uploadMain holds promise for main image
-    const uploadMain = addImage(post, firebase)
-  
-    const uploadContent = new Promise((resolve, reject) => {
-      const contentsLen = post.contents.length
-      post.contents.map((content, i) => {
-        addImage(content, firebase)
-        if (contentsLen === i + 1) {
-          resolve("all content images are uploaded")
-        }
-      })
-    })
-  
-    // execute db insert logic after storage logic is finished
-    Promise.all([uploadMain, uploadContent]).then((msg) => {
-      console.log('promise msg :', msg)
-      console.log('post', post)
-      db.collection('posts').add({
-        ...post,
-        countrySlug: countrySlug,
-        createdAt: new Date()
-      }).then((doc) => {
-        post.id = doc.id
-        // redirect to post detail page when db work is done
-        history.push(`/post/${post.country}/${doc.id}`)
-        dispatch({ type: 'ADD_POST', post })
-      }).catch((err) => {
-        dispatch({ type: 'ADD_POST_ERROR', err })
-      })
-    }) */
   }
 }
