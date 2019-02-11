@@ -114,12 +114,7 @@ export class EditPost extends Component {
     title: "",
     summary: "",
     contentRow: 1,
-    contents: [
-      {
-        image: "",
-        body: ""
-      }
-    ],
+    contents: [],
     image: "",
     thumbnail: "",
   }
@@ -233,6 +228,7 @@ export class EditPost extends Component {
     }
 
     console.log(this.state)
+    console.log(this.state.image)
 
     // save all contentRows in array and show
     const contentRow = () => {

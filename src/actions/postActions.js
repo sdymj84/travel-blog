@@ -12,13 +12,18 @@ export const createPost = (post, history) => {
     const uploadMain = addImage(post, firebase)
 
     const uploadContent = new Promise((resolve, reject) => {
-      const contentsLen = post.contents.length
+      const promises = []
       post.contents.map((content, i) => {
-        addImage(content, firebase)
-        if (contentsLen === i + 1) {
-          resolve("all content images are uploaded")
-        }
+        const promise = addImage(content, firebase)
+        promises.push(promise)
       })
+      Promise.all(promises)
+        .then(() => {
+          resolve("All content images are uploaded")
+        })
+        .catch(err => {
+          reject("rejected from one of content image upload", err.message)
+        })
     })
 
     // execute db insert logic after storage logic is finished
@@ -134,24 +139,50 @@ const addImage = (object, firebase) => {
       .child(`posts/${object.image.name}`)
     // add image to firebase storage
     console.log('addImage:', object)
-    ref.put(object.image).then(() => {
-      ref.getDownloadURL().then(url => {
-        // change file prop to url because file object cannot be uploaded to db
-        object.image = url
-        resolve("Image uploaded to storage successfully")
+    if (object.image) {
+      ref.put(object.image).then(() => {
+        ref.getDownloadURL().then(url => {
+          // change file prop to url because file object cannot be uploaded to db
+          object.image = url
+          resolve("Image uploaded to storage successfully")
+        })
+      }).catch(err => {
+        reject("Error while adding image to storage" + err)
       })
-    }).catch(err => {
-      reject("Error while adding image to storage" + err)
-    })
+    } else {
+      resolve("image is empty :", object)
+    }
+
   })
 }
 
-const editImage = (object, urlToDelete, firebase) => {
+const editImage = (object, urlArrToDelete, firebase) => {
   return new Promise((resolve, reject) => {
+    // if there's thumbnail, it means image is changed
+    // if image not changed, do nothing
+
+    // TODO: fix to upload content images properly
+
     if (object.thumbnail) {
       console.log('editImage', object)
-      addImage(object, firebase)
-      deleteImage(urlToDelete, firebase)
+      urlArrToDelete.forEach(urlToDelete => {
+        deleteImage(urlToDelete, firebase)
+      })
+
+      const promises = []
+      object.contents.map((content) => {
+        const promise = addImage(content, firebase)
+        promises.push(promise)
+      })
+      Promise.all(promises)
+        .then(() => {
+          resolve("[editImage] addImage finished")
+        })
+        .catch(err => {
+          reject("[editImage] rejected while adding images", err.message)
+        })
+    } else {
+      resolve()
     }
   })
 }
@@ -162,27 +193,9 @@ export const editPost = (newPost, postId, history) => {
     const firebase = getFirebase()
     const db = getFirestore()
 
-    /* 
-      1. get db doc by postId and get all image urls
-      
-      2. image update (delete and add if changed)
-        a. main image update
-
-
-      - if thumbnail
-      2. upload new image to storage
-      3. get existing url and delete image from storage
-      4. then, get new url from stroage and update db with other props
-      
-      - else
-      2. update db
-    */
-
-    // store urls from all images 
-    // so that can find files from storage to delete 
-    // without connecting database any more
+    // slugify country name and add to db
+    const countrySlug = slugify(newPost.country, { lower: true })
     const imageUrls = []
-
     // 1. get db doc by postId and get all image urls
     const currentDoc = db.collection('posts').doc(postId)
     currentDoc.get()
@@ -195,15 +208,21 @@ export const editPost = (newPost, postId, history) => {
       })
       .then(() => {
         if (newPost.thumbnail) {
-          editImage(newPost, imageUrls[0], firebase)
+          return editImage(newPost, imageUrls, firebase)
         }
+      }).then(() => {
+        currentDoc.update({
+          ...newPost,
+          countrySlug,
+        }).then(() => {
+          console.log("Successfully updated database")
+        }).catch(err => {
+          console.log('Error while updating database', err.message)
+        })
       })
 
 
-
-
-    /* // slugify country name and add to db
-    const countrySlug = slugify(post.country, { lower: true })
+    /* 
   
     // uploadMain holds promise for main image
     const uploadMain = addImage(post, firebase)
