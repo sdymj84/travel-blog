@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Navbar from './layout/Navbar'
 import Footer from './layout/Footer'
 import Home from './home/Home'
@@ -11,6 +11,7 @@ import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import NotFound from './home/NotFound';
 import styled from "styled-components";
+import Cookie from 'js-cookie'
 
 const Wrapper = styled.div`
   min-height: calc(100vh - 352px);
@@ -19,6 +20,10 @@ const Wrapper = styled.div`
 
 export class TravelBlog extends Component {
   render() {
+    if (!Cookie.get('visited')) {
+      Cookie.set('visited', true, { expires: 7 })
+      return <Redirect to={'/welcome'} />
+    }
     return (
       <BrowserRouter>
         <div>

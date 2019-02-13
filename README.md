@@ -12,6 +12,8 @@
 - Travel blog that only I can write/edit/delete. anyone can visit and read
 - Filter countries by continent using worldmap on main page
 - Contain all logic and style in each single component file using styled-components
+- Show welcome page for first time visitors
+- Put business logic to write/edit/delete posts in action creators with redux-thunk
 ---
 
 ## Steps to Develop
