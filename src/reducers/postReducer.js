@@ -38,6 +38,12 @@ const postReducer = (state = initialState, action) => {
       console.log("Error while deleting document from db :", action.err)
       return state
 
+    case 'FETCH_COUNTRIES':
+      return {
+        ...state,
+        countries: action.countries
+      }
+
     default:
       return state
   }

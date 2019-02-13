@@ -4,6 +4,8 @@ import { Button, Modal, Form, Col, Row } from 'react-bootstrap'
 import 'react-quill/dist/quill.snow.css'
 import ContinentDropdown from './ContinentDropdown'
 import CountryDataDropdown from './CountryDataDropdown';
+import { fetchCountryList } from "../../actions/postActions";
+import { connect } from "react-redux";
 
 
 const StyledContainer = styled.div`
@@ -20,6 +22,10 @@ const StyledContainer = styled.div`
 `
 
 export class CreateCountryModal extends Component {
+
+  // componentDidMount = () => {
+  //   this.props.fetchCountryList()
+  // }
 
   render() {
     const { handleSubmit, handleChange, handleContinentChange,
@@ -48,12 +54,10 @@ export class CreateCountryModal extends Component {
                   <ContinentDropdown handleContinentChange={handleContinentChange} />
                 </Col>
                 {continent ? <Col>
-                  <CountryDataDropdown handleCountryChange={handleCountryChange} />
+                  <CountryDataDropdown
+                    handleCountryChange={handleCountryChange} />
                 </Col> : null}
               </Row>
-              {/* <Form.Group controlId="countryName">
-                <Form.Control type="text" placeholder="Country Name" onChange={handleChange} required />
-              </Form.Group> */}
 
               <Form.Group controlId="summary">
                 <Form.Control type="text" placeholder="Summary" onChange={handleChange} required />
@@ -83,6 +87,12 @@ export class CreateCountryModal extends Component {
   }
 }
 
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     fetchCountryList: () => dispatch(fetchCountryList())
+//   }
+// }
+
+// export default connect(null, mapDispatchToProps)(CreateCountryModal)
 
 export default CreateCountryModal
-

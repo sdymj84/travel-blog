@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import 'react-quill/dist/quill.snow.css'
 import { connect } from "react-redux";
-import { createCountry } from '../../actions/postActions'
+import { createCountry, fetchCountryList } from '../../actions/postActions'
 import { Redirect } from 'react-router-dom'
 import { TiPlus } from "react-icons/ti";
 import CreateCountryModal from './CreateCountryModal';
@@ -16,6 +16,10 @@ export class CreateCountry extends Component {
     summary: "",
     selectedFile: "",
     modalShow: false,
+  }
+
+  componentDidMount = () => {
+    this.props.fetchCountryList()
   }
 
   modalClose = () => {
@@ -79,6 +83,7 @@ export class CreateCountry extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     createCountry: (country) => dispatch(createCountry(country)),
+    fetchCountryList: () => dispatch(fetchCountryList())
   }
 }
 

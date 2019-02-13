@@ -1,4 +1,5 @@
 import slugify from 'slugify'
+import axios from 'axios'
 
 export const createPost = (post, history) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -167,6 +168,16 @@ export const editPost = (newPost, postId, history) => {
 
 // TODO: create action for fetch country list
 // and download from reducer
+export const fetchCountryList = () => {
+  return dispatch => {
+    axios.get(`https://restcountries.eu/rest/v2/all`)
+      .then(res => {
+        const countries = res.data
+        dispatch({ type: "FETCH_COUNTRIES", countries })
+      })
+  }
+}
+
 
 const deleteImage = (urlToDelete, firebase) => {
   if (urlToDelete) {

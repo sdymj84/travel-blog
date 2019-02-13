@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
+import { connect } from "react-redux";
 
 const StyledSelect = styled.select`
   width: 200px;
@@ -10,17 +10,6 @@ const StyledSelect = styled.select`
 export class CountryDataDropdown extends Component {
   state = {
     selectedCountry: "",
-    countries: "",
-  }
-
-  componentDidMount = () => {
-    // const { continent } = this.props
-    axios.get(`https://restcountries.eu/rest/v2/all`)
-      .then(res => {
-        console.log(res)
-        const countries = res.data
-        this.setState({ countries })
-      })
   }
 
   handleChange = (e) => {
@@ -29,7 +18,7 @@ export class CountryDataDropdown extends Component {
   }
 
   render() {
-    const { countries } = this.state
+    const { countries } = this.props
     return (
       <StyledSelect className="btn btn-info"
         value={this.props.selectedCountry || this.state.selectedCountry}
@@ -38,7 +27,6 @@ export class CountryDataDropdown extends Component {
         <option value="">Select Country</option>
         {countries && countries.map(country => {
           const name = country.name
-          console.log(name)
           return (
             <option key={country.alpha2Code} value={name}>{name}</option>
           )
@@ -48,4 +36,9 @@ export class CountryDataDropdown extends Component {
   }
 }
 
-export default CountryDataDropdown
+const mapStateToProps = (state) => {
+  const countries = state.post.countries
+  return { countries }
+}
+
+export default connect(mapStateToProps)(CountryDataDropdown)
