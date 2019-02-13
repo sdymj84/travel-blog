@@ -1,25 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RingLoader } from "react-spinners";
+import { Modal } from "react-bootstrap";
 
 
 const StyledLoader = styled.div`
-  min-height: calc(100vh - 376px);
-  margin-top: 3em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  margin: auto;
+  top: 40%;
+  bottom: 0;
+  right: 0;
+  left: 50%;
+  margin-left: -50px;
 
+`
+const StyledModal = styled(Modal)`
+  visibility: hidden;
 `
 
 const Loading = () => {
+  const handleHide = () => { }
+
   return (
-    <StyledLoader>
-      <RingLoader
-        sizeUnit={"px"}
-        size={100}
-        color={'#308F9E'} />
-    </StyledLoader>
+    <div>
+      <StyledLoader className="loader">
+        <RingLoader
+          sizeUnit={"px"}
+          size={100}
+          color={'#308F9E'} />
+      </StyledLoader>
+      <StyledModal show={true}
+        onHide={handleHide}></StyledModal>
+    </div>
   )
 }
 

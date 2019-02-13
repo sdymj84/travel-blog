@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom'
 import CreateCountry from './CreateCountry';
 import TextEditor from './TextEditor';
 import { TiPlus } from "react-icons/ti";
+import Loader from "../layout/Loader"
 
 const StyledContainer = styled.div`
   margin-top: 3em;
@@ -118,6 +119,7 @@ export class CreatePost extends Component {
     ],
     image: "",
     thumbnail: "",
+    submitting: false,
   }
 
 
@@ -139,6 +141,7 @@ export class CreatePost extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    this.setState({ submitting: true })
     this.props.createPost(this.state)
   }
 
@@ -273,7 +276,7 @@ export class CreatePost extends Component {
                 <Button as="input" type="submit" value="Submit" block />
               </Col>
             </Form.Group>
-
+            {this.state.submitting ? <Loader /> : null}
           </Form>
         </Container>
       </StyledContainer >

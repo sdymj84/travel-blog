@@ -10,7 +10,7 @@ const initialState = {
     {
       id: 2,
       photoUrl: "/img/australia.jpg",
-      countryName: "Autralia",
+      countryName: "Australia",
       summary: "Been there for 1y 6m",
       continent: "oceania",
     },

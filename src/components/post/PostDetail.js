@@ -13,6 +13,11 @@ import { deletePost } from "../../actions/postActions";
 const StyledContainer = styled.div`
   .container {
     margin-top: 3em;
+    
+    @media (min-width: 1200px) {
+      width: 970px;
+      margin: 3em auto 0;
+    }
   }
 
   .container-fluid {
@@ -28,6 +33,8 @@ const StyledContainer = styled.div`
   .card {
     margin-bottom: 1em;
     font-size: 1.2em;
+
+    
   }
 
   .title-container {

@@ -116,6 +116,7 @@ export class EditPost extends Component {
     contents: [],
     image: "",
     thumbnail: "",
+    submitting: false,
   }
 
 
@@ -168,6 +169,7 @@ export class EditPost extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    this.setState({ submitting: true })
     this.props.editPost(this.state, this.props.match.params.post_id)
   }
 
@@ -225,9 +227,6 @@ export class EditPost extends Component {
     if (!post) {
       return <Loader />
     }
-
-    console.log(this.state)
-    console.log(this.state.image)
 
     // save all contentRows in array and show
     const contentRow = () => {
@@ -313,7 +312,7 @@ export class EditPost extends Component {
                 <Button as="input" type="submit" value="Submit" block />
               </Col>
             </Form.Group>
-
+            {this.state.submitting ? <Loader /> : null}
           </Form>
         </Container>
       </StyledContainer >
