@@ -14,10 +14,11 @@ export class CountryDataDropdown extends Component {
   }
 
   componentDidMount = () => {
-    // axios.get('http://vocab.nic.in/rest.php/country/json')
-    axios.get('https://restcountries.eu/rest/v2/all')
+    // const { continent } = this.props
+    axios.get(`https://restcountries.eu/rest/v2/all`)
       .then(res => {
-        const countries = res.data.countries
+        console.log(res)
+        const countries = res.data
         this.setState({ countries })
       })
   }
@@ -36,10 +37,10 @@ export class CountryDataDropdown extends Component {
         required>
         <option value="">Select Country</option>
         {countries && countries.map(country => {
-          const name = country.country.country_name
+          const name = country.name
           console.log(name)
           return (
-            <option key={country.country.country_id} value={name}>{name}</option>
+            <option key={country.alpha2Code} value={name}>{name}</option>
           )
         })}
       </StyledSelect>

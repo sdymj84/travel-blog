@@ -23,6 +23,7 @@ export class CreateCountryModal extends Component {
 
   render() {
     const { handleSubmit, handleChange, handleContinentChange,
+      handleCountryChange,
       handleSelectedFile, continent, ...modalProps } = this.props
     console.log(continent)
 
@@ -46,9 +47,9 @@ export class CreateCountryModal extends Component {
                 <Col>
                   <ContinentDropdown handleContinentChange={handleContinentChange} />
                 </Col>
-                <Col>
-                  <CountryDataDropdown />
-                </Col>
+                {continent ? <Col>
+                  <CountryDataDropdown handleCountryChange={handleCountryChange} />
+                </Col> : null}
               </Row>
               {/* <Form.Group controlId="countryName">
                 <Form.Control type="text" placeholder="Country Name" onChange={handleChange} required />

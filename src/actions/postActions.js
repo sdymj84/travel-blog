@@ -165,7 +165,8 @@ export const editPost = (newPost, postId, history) => {
   }
 }
 
-
+// TODO: create action for fetch country list
+// and download from reducer
 
 const deleteImage = (urlToDelete, firebase) => {
   if (urlToDelete) {

@@ -1,28 +1,4 @@
 const initialState = {
-  countries: [
-    {
-      id: 1,
-      photoUrl: "/img/south-korea.jpg",
-      countryName: "South Korea",
-      summary: "My Home",
-      continent: "asia",
-    },
-    {
-      id: 2,
-      photoUrl: "/img/australia.jpg",
-      countryName: "Australia",
-      summary: "Been there for 1y 6m",
-      continent: "oceania",
-    },
-    {
-      id: 3,
-      photoUrl: "/img/usa.jpg",
-      countryName: "United States",
-      summary: "My second home",
-      continent: "north-america",
-    },
-  ],
-
   post_id: "",
 }
 

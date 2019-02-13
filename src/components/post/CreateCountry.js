@@ -36,8 +36,7 @@ export class CreateCountry extends Component {
     this.setState({ continent })
   }
 
-  handleCountryChange = (country) => {
-    const countryName = this.toCamelCase(country)
+  handleCountryChange = (countryName) => {
     this.setState({ countryName })
   }
 
@@ -53,8 +52,6 @@ export class CreateCountry extends Component {
     this.modalClose()
   }
 
-  toCamelCase = (s) => s.toLowerCase().replace(/-(.)/g, (m, g) => g.toUpperCase());
-
   render() {
     return (
       <span>
@@ -68,6 +65,7 @@ export class CreateCountry extends Component {
           onHide={this.modalClose}
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
+          handleCountryChange={this.handleCountryChange}
           handleContinentChange={this.handleContinentChange}
           handleSelectedFile={this.handleSelectedFile}
           continent={this.state.continent}
