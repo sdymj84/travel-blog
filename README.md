@@ -15,6 +15,7 @@
 - Contain all logic and style in each single component file using styled-components
 - Show welcome page for first time visitors
 - Put business logic to write/edit/delete posts in action creators with redux-thunk
+- Deployed on Firebase hosting
 ---
 
 ## Steps to Develop
