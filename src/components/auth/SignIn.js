@@ -52,13 +52,18 @@ export class SignIn extends Component {
               : null
           }
 
+          <Alert variant="info">
+            <div>Please use test email "test@test.com" and password "test123" to explore post/edit features.</div>
+            <div>There's no signup feature since the owner can post and visitors will read only.</div>
+          </Alert>
+
           <Form onSubmit={this.handleSubmit}>
             <Form.Group as={Row} controlId="email">
               <Form.Label column sm={2}>
                 Email
               </Form.Label>
               <Col sm={10} md={8} lg={6}>
-                <Form.Control type="email" placeholder="Email" onChange={this.handleChange} />
+                <Form.Control type="email" placeholder="Email : 'test@test.com'" onChange={this.handleChange} />
               </Col>
             </Form.Group>
 
@@ -67,7 +72,7 @@ export class SignIn extends Component {
                 Password
               </Form.Label>
               <Col sm={10} md={8} lg={6}>
-                <Form.Control type="password" placeholder="Password" onChange={this.handleChange} />
+                <Form.Control type="password" placeholder="Password : 'test123'" onChange={this.handleChange} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="formHorizontalCheck">
@@ -82,6 +87,7 @@ export class SignIn extends Component {
               </Col>
             </Form.Group>
           </Form>
+
 
         </Container>
       </StyledContainer>
