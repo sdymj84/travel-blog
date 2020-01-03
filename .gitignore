@@ -11,6 +11,9 @@
 # production
 /build
 
+#config files
+/src/config/fbConfig.js
+
 # misc
 .DS_Store
 .env.local
